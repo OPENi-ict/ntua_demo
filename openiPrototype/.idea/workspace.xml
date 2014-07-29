@@ -26,16 +26,25 @@
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openiPrototype/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1350">
+            <state line="78" column="2" selection-start="1929" selection-end="1929" vertical-scroll-proportion="0.0" vertical-offset="766" max-vertical-offset="1380">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openiPrototype/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="31" selection-start="606" selection-end="606" vertical-scroll-proportion="0.32258064" vertical-offset="0" max-vertical-offset="651">
+            <state line="17" column="59" selection-start="645" selection-end="645" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="apiURLs.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appUI/apiURLs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="105" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
               <folding />
             </state>
           </provider>
@@ -44,16 +53,38 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appUI/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="13" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="720">
+            <state line="36" column="19" selection-start="946" selection-end="946" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1050">
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="queryHandlers.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appUI/queryHandlers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="5" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+              <folding>
+                <element signature="e#26#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/appUI/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/appUI/templates/index.html">
+      <file leaf-file-name="recommenderParser.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/appUI/recommenderParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="726" selection-end="726" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="9705">
+            <state line="51" column="0" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.85148513" vertical-offset="421" max-vertical-offset="855">
               <folding />
             </state>
           </provider>
@@ -62,16 +93,7 @@
       <file leaf-file-name="jsonModel.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/appUI/jsonModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="54" selection-start="806" selection-end="806" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="toggle.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/appUI/static/css/switch/toggle.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="1" selection-start="2083" selection-end="2094" vertical-scroll-proportion="0.0" vertical-offset="855" max-vertical-offset="1050">
+            <state line="18" column="54" selection-start="806" selection-end="806" vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="630">
               <folding />
             </state>
           </provider>
@@ -96,18 +118,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/appUI/templates/empty.html" />
-        <option value="$PROJECT_DIR$/appUI/templates/UI/buttons.html" />
         <option value="$PROJECT_DIR$/appUI/templates/calendar.html" />
         <option value="$PROJECT_DIR$/appUI/static/js/plugins/switch/switch.js" />
         <option value="$PROJECT_DIR$/appUI/static/css/toggle/toggle.css" />
-        <option value="$PROJECT_DIR$/openiPrototype/urls.py" />
-        <option value="$PROJECT_DIR$/appUI/views.py" />
         <option value="$PROJECT_DIR$/appUI/static/css/switch/style.css" />
         <option value="$PROJECT_DIR$/appUI/static/css/switch/toggle.css" />
         <option value="$PROJECT_DIR$/appUI/static/js/switch/freebies.js" />
-        <option value="$PROJECT_DIR$/appUI/templates/index.html" />
         <option value="$PROJECT_DIR$/appUI/jsonModel.py" />
+        <option value="/Library/Python/2.7/site-packages/django/contrib/sessions/middleware.py" />
+        <option value="$PROJECT_DIR$/appUI/models.py" />
+        <option value="$PROJECT_DIR$/openiPrototype/urls.py" />
+        <option value="$PROJECT_DIR$/openiPrototype/settings.py" />
+        <option value="$PROJECT_DIR$/appUI/recommenderParser.py" />
+        <option value="$PROJECT_DIR$/appUI/apiURLs.py" />
+        <option value="$PROJECT_DIR$/appUI/queryHandlers.py" />
+        <option value="$PROJECT_DIR$/appUI/views.py" />
+        <option value="$PROJECT_DIR$/appUI/templates/index.html" />
       </list>
     </option>
   </component>
@@ -142,6 +168,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -188,29 +215,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="openiPrototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="openiPrototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="appUI" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="terminal" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings />
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/appUI" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/appUI/static/css/switch" />
       <recent name="$PROJECT_DIR$/appUI/static/img/switch" />
       <recent name="$PROJECT_DIR$/appUI/static/js/switch" />
-      <recent name="$PROJECT_DIR$/appUI/static/fonts" />
-      <recent name="$PROJECT_DIR$/appUI/static/js/bootstrap-switch" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/appUI" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/appUI/geoIP" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.openiPrototype">
@@ -394,7 +447,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="DJANGO_SETTINGS_MODULE" value="openiPrototype.settings" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -413,11 +466,55 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <list size="1">
+    <configuration default="false" name="openiVE" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="openiPrototype.settings" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/openiEnv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="openiPrototype" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Django server.openiPrototype" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.openiVE" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e982712c-65de-4a92-870f-1353154ad45d" name="Default" comment="" />
@@ -427,24 +524,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="0" />
+    <frame x="0" y="22" width="1280" height="774" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6701031" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298969" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298969" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298969" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -462,53 +559,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/appUI/templates/empty.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="413" column="20" selection-start="25427" selection-end="25427" vertical-scroll-proportion="10.089577" vertical-offset="0" max-vertical-offset="6360" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/static/ajax/dashboard-boxrefresh-demo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/templates/UI/buttons.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1268" column="20" selection-start="91200" selection-end="91200" vertical-scroll-proportion="30.9772" vertical-offset="0" max-vertical-offset="19215" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/templates/calendar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="19" selection-start="272" selection-end="272" vertical-scroll-proportion="0.17100978" vertical-offset="0" max-vertical-offset="9810" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/static/css/font-awesome.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="374" selection-start="518" selection-end="536" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/templates/widgets.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="572" column="20" selection-start="33482" selection-end="38240" vertical-scroll-proportion="-0.86" vertical-offset="8537" max-vertical-offset="14520" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/templates/index-backup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="20" selection-start="738" selection-end="738" vertical-scroll-proportion="0.33333334" vertical-offset="95" max-vertical-offset="14355" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="13" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0" vertical-offset="293" max-vertical-offset="720">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/static/js/plugins/iCheck/icheck.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appUI/static/js/plugins/switch/switch.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="14" selection-start="43" selection-end="53" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495" />
@@ -526,20 +576,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/static/js/switch/freebies.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="19" selection-start="4375" selection-end="4375" vertical-scroll-proportion="0.0" vertical-offset="2400" max-vertical-offset="11100">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appUI/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="726" selection-end="726" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="9705">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/appUI/jsonModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="54" selection-start="806" selection-end="806" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
@@ -547,9 +583,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/static/js/switch/freebies.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="19" selection-start="4375" selection-end="4375" vertical-scroll-proportion="0.0" vertical-offset="2400" max-vertical-offset="11100">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/django/contrib/sessions/middleware.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="48" selection-start="186" selection-end="186" vertical-scroll-proportion="0.18564357" vertical-offset="0" max-vertical-offset="765">
+          <folding>
+            <element signature="e#0#11#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/openiPrototype/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="31" selection-start="606" selection-end="606" vertical-scroll-proportion="0.32258064" vertical-offset="0" max-vertical-offset="651">
+        <state line="17" column="59" selection-start="645" selection-end="645" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pytz/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.7425743" vertical-offset="300" max-vertical-offset="23145">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openiPrototype/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="2" selection-start="1929" selection-end="1929" vertical-scroll-proportion="0.0" vertical-offset="766" max-vertical-offset="1380">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm30/python_stubs/596071422/datetime.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="492" column="8" selection-start="16763" selection-end="16763" vertical-scroll-proportion="0.33248082" vertical-offset="7250" max-vertical-offset="9495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/apiURLs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="105" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/queryHandlers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="5" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <folding>
+            <element signature="e#26#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="19" selection-start="946" selection-end="946" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1050">
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="461" column="48" selection-start="29090" selection-end="29090" vertical-scroll-proportion="0.15542522" vertical-offset="6862" max-vertical-offset="10020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/appUI/recommenderParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.85148513" vertical-offset="421" max-vertical-offset="855">
           <folding />
         </state>
       </provider>
