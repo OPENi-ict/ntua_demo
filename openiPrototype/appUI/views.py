@@ -7,6 +7,7 @@ import tzwhere
 import arrow
 import queryHandlers
 import json
+import recommenderParser
 
 # Create your views here.
 from django.views.decorators.http import require_GET
@@ -40,9 +41,10 @@ def welcome(request):
     utc2 = arrow.utcnow()
     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
     query="long=%s&lat=%s"%(lng,lat)
-    response=queryHandlers.getRecommendations(query)
-    print response
-    return render_to_response('index.html', {"lat":lat, "long":lng, "city":city, "datetime":local})
+    #query="long=%s&lat=%s"%(lat,lng)
+    places=queryHandlers.getRecommendations(query)
+    print places
+    return render_to_response('index.html', {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places})
 
 def widgets(request):
     return render(request, "widgets.html")

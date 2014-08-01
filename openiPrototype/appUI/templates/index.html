@@ -470,11 +470,11 @@
 
                                                 <div class="input-group">
                                                     <i class="fa fa-building-o"></i>
-                                                    <input type="text" class="form-control" placeholder="city" id="cityTextbox" value="{{ city.city }}" disabled>
+                                                    <label> : {{ city.city }}</label>
                                                 </div>
                                                 <div class="input-group">
                                                     <i class="fa fa-circle-o"></i>
-                                                    <input type="text" class="form-control" placeholder="city" id="cityTextbox" value="{{ city.country_name }}" disabled>
+                                                    <label> : {{ city.country_name }}</label>
                                                 </div>
                                             </p>
                                             <p>
@@ -522,18 +522,15 @@
                                     </div>
                                     <div class="box-body">
                                         <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                            {% for place in places.recommendations %}
+                                                <img src="{{ place.photoURL }}" alt="{{ place.name }}" class="margin">
+                                            {% endfor %}
                                         </div>
                                     </div><!-- /.box-body -->
                                     <div class="box-footer">
-                                        <label for="male">#tag, #tag, #tag </label><br>
+                                        <label for="tags">
+                                            #tag, #tag, #tag
+                                        </label><br>
                                         Places coming from Recommender SE
                                     </div><!-- /.box-footer-->
                                 </div><!-- /.box -->
