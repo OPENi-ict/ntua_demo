@@ -58,3 +58,4 @@ docs/_build/
 *.suo
 bin/
 obj/
+openiPrototype/.idea/workspace.xml
