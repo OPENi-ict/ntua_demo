@@ -8,6 +8,8 @@ import arrow
 import queryHandlers
 import json
 import recommenderParser
+from django.core.context_processors import csrf
+from django.template import RequestContext
 
 # Create your views here.
 from django.views.decorators.http import require_GET
@@ -26,7 +28,6 @@ def logout(request):
 def register(request):
     return None
 
-@require_GET
 def welcome(request):
     lat=23.7
     lng= 37.9
@@ -41,10 +42,17 @@ def welcome(request):
     utc2 = arrow.utcnow()
     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
     query="long=%s&lat=%s"%(lng,lat)
-    #query="long=%s&lat=%s"%(lat,lng)
-    places=queryHandlers.getRecommendations(query)
-    print places
-    return render_to_response('index.html', {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places})
+    places=[]
+    #places=queryHandlers.getRecommendations(query)
+    #print places
+    settings={}
+    if request.method == 'POST':
+        settings['locationSettings']=request.POST.get("locationSettings", "")
+        settings['datetimeSettings']=request.POST.get("datetimeSettings", "")
+        print settings
+    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings}
+    args.update(csrf(request))
+    return render_to_response('index.html' , args)
 
 def widgets(request):
     return render(request, "widgets.html")
