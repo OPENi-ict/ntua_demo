@@ -34,22 +34,30 @@ def welcome(request):
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
-    if ip and (ip!='127.0.0.1'):
-        lat,lng=g.lat_lon(ip)
-    city=g.city(ip)
-    #now_utc = datetime.datetime.now()
-    timezone=str(tzwhere().tzNameAt(lat, lng))
-    utc2 = arrow.utcnow()
-    local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
-    query="long=%s&lat=%s"%(lng,lat)
-    places=[]
-    #places=queryHandlers.getRecommendations(query)
+    city=g.city(ip) #this method puts delay on the request, if not needed should be removed
     #print places
     settings={}
     if request.method == 'POST':
         settings['locationSettings']=request.POST.get("locationSettings", "")
-        settings['datetimeSettings']=request.POST.get("datetimeSettings", "")
-        print settings
+        settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
+        settings['profileSettings']=request.POST.get("profileSettings", "")
+        settings['friendsSettings']=request.POST.get("friendsSettings", "")
+        settings['activitySettings']=request.POST.get("activitySettings", "")
+        settings['moodSettings']=request.POST.get("moodSettings", "")
+        settings['weekdaySettings']=request.POST.get("weekdaySettings", "")
+        settings['interestsSettings']=request.POST.get("interestsSettings", "")
+        lat=request.POST.get("latitudeTextbox", "")
+        lng=request.POST.get("longitudeTextbox", "")
+        #print settings
+    else:
+        if ip and (ip!='127.0.0.1'):
+            lat,lng=g.lat_lon(ip)
+    timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
+    utc2 = arrow.utcnow()
+    local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
+    query="long=%s&lat=%s"%(lng,lat) #query properties for recommender
+    places=[]
+    places=queryHandlers.getRecommendations(query) #call recommender
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings}
     args.update(csrf(request))
     return render_to_response('index.html' , args)
