@@ -58,7 +58,10 @@ def welcome(request):
     query="long=%s&lat=%s"%(lng,lat) #query properties for recommender
     places=[]
     places=queryHandlers.getRecommendations(query) #call recommender
-    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings}
+
+    photos=queryHandlers.OpeniCall()
+    photosAround=photos.getPhotos(lat,lng,"instagram")
+    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "photos":photosAround}
     args.update(csrf(request))
     return render_to_response('index.html' , args)
 

@@ -566,70 +566,86 @@
                         </form>
                     </div>
                     <div class="col-md-9">
-                        <div class="col-sm-12">
-                            <div class="box box-primary">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Places</h3>
-                                    </div>
-                                    <div class="box-body">
+                        <div class="panel-group" id="accordion">
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                      Places
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                  <div class="panel-body">
                                         <div class="timeline-body">
                                             {% for place in places.recommendations %}
-                                                <img src="{{ place.photoURL }}" alt="{{ place.name }}" class="margin">
+                                                <!--img src="{{ place.photoURL }}" alt="{{ place.name }}" class="margin"-->
+                                                <div class="media">
+                                                  <a class="pull-left" href="{{ place.photoURL }}">
+                                                    <img class="media-object" src="{{ place.photoURL }}" alt="{{ place.name }}">
+                                                  </a>
+                                                  <div class="media-body">
+                                                    <h4 class="media-heading">{{ place.name }}</h4>
+                                                  </div>
+                                                </div>
                                             {% endfor %}
                                         </div>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer">
-                                        <label for="tags">
+
+                                   </div><!-- /.panel-body -->
+                                    <div class="panel-footer">
+                                        label for="tags">
                                             #tag, #tag, #tag
                                         </label><br>
                                         Places coming from Recommender SE
-                                    </div><!-- /.box-footer-->
-                                </div><!-- /.box -->
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="box box-primary">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Photos</h3>
                                     </div>
-                                    <div class="box-body">
-                                        <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        </div>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer">
-                                        Photos around coming from CBS
-                                    </div><!-- /.box-footer-->
-                                </div><!-- /.box -->
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="box box-primary">
-                                    <div class="box-header">
-                                        <h3 class="box-title">Events</h3>
+
+                                </div>
+                              </div>
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                      Photos
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                    <div class="timeline-body">
+                                            {% for response in photos %}
+                                                {% for photo in response.response %}
+                                                    <img src="{{ photo.file.icon }}" alt="{{ photo.file.title }}" class="margin">
+                                                {% endfor %}
+                                            {% endfor %}
                                     </div>
-                                    <div class="box-body">
-                                        <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                        </div>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer">
-                                        Events around from CBS
-                                    </div><!-- /.box-footer-->
-                                </div><!-- /.box -->
-                        </div>
+                                    <div class="panel-footer">
+                                        Photos around coming from CBS <br/>
+                                            {% for response in photos %}
+                                                {% for photo in response.response %}
+                                                    {% for tag in photo.tags %}
+                                                        #{{ tag |slice:"5:"}}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                      Events
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                     </div>
 
                 </section><!-- /.content -->
