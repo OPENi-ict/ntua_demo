@@ -14,6 +14,8 @@ from tzwhere.tzwhere import tzwhere
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_protect
 
+latitude=23.7
+longitude=37.9
 
 def signout(request):
     ## Put a check if user is logged in, before!
@@ -54,7 +56,6 @@ def welcome(request):
     query="long=%s&lat=%s"%(lng,lat) #query properties for recommender
     places=[]
     places=queryHandlers.getRecommendations(query) #call recommender
-
     photos=queryHandlers.OpeniCall()
     photosAround=photos.getPhotos(lat,lng,"instagram")
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "photos":photosAround, "user":request.user}
@@ -73,7 +74,13 @@ def setSystem(request):
 
 ##Methods to connect with OPENi
 def getPlaces(request):
-    places=[]
+    g = GeoIP()
+    ip = request.META.get('REMOTE_ADDR', None)
+    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+    if ip and (ip!='127.0.0.1'):
+            lat,lng=g.lat_lon(ip)
+    query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
+    places=queryHandlers.getRecommendations(query) #call recommender
     args = { "places":places, "user":request.user}
     args.update(csrf(request))
     return render_to_response('places.html' , args)
