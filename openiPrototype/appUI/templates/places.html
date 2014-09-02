@@ -1,0 +1,26 @@
+{% extends "base-theme.html" %}
+
+{% block extra_html %}{% endblock %}
+{% load leaflet_tags %}
+
+{% block extra_headers %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock %}
+
+
+{% block show_content %}
+
+    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+    function map_init_basic (map, options) {
+
+        L.marker([50.5, 30.5]).addTo(map);
+
+    }
+</script>
+{% endblock %}

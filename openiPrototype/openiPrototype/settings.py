@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'appUI',
     'django.contrib.gis.geoip',
+    'leaflet',
+    'django.contrib.staticfiles',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,3 +88,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 GEOIP_PATH='./'
+
+LEAFLET_CONFIG = {
+    'SPATIAL_EXTENT': (5.0, 44.0, 7.5, 46),
+    'DEFAULT_CENTER': (23.7, 37.9),
+    'DEFAULT_ZOOM': 8,
+    'MIN_ZOOM': 1,
+    'MAX_ZOOM': 18,
+    'SCALE': 'both',
+}
