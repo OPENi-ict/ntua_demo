@@ -91,8 +91,8 @@ GEOIP_PATH='./'
 
 LEAFLET_CONFIG = {
     #'SPATIAL_EXTENT': (5.0, 44.0, 7.5, 46),
-    'DEFAULT_CENTER': (23.7333, 37.9333),
-    'DEFAULT_ZOOM': 8,
+    'DEFAULT_CENTER': (37.9756560,23.7339460),
+    'DEFAULT_ZOOM': 5,
     'MIN_ZOOM': 1,
     'MAX_ZOOM': 18,
     'SCALE': 'both',

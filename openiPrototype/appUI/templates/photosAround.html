@@ -1,0 +1,40 @@
+{% extends "base-theme.html" %}
+
+{% block page_title %}List View{% endblock %}
+
+{% block show_content %}
+                    <div class="col-md-9">
+                        <div class="panel-group" id="accordion">
+                              <div class="panel panel-default">
+                                <div class="panel-heading">
+                                  <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                      <i class="fa fa-picture-o"></i> Photos
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                  <div class="panel-body">
+                                    <div class="timeline-body">
+                                            {% for response in photos %}
+                                                {% for photo in response.response %}
+                                                    <img src="{{ photo.file.icon }}" alt="{{ photo.file.title }}" class="margin">
+                                                {% endfor %}
+                                            {% endfor %}
+                                    </div>
+                                    <div class="panel-footer">
+                                        Photos around coming from CBS <br/>
+                                            {% for response in photos %}
+                                                {% for photo in response.response %}
+                                                    {% for tag in photo.tags %}
+                                                        #{{ tag |slice:"5:"}}
+                                                    {% endfor %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                    </div>
+{% endblock %}

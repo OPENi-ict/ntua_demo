@@ -8,6 +8,8 @@
     {% leaflet_css %}
 {% endblock %}
 
+{% block page_title %}Map view{% endblock %}
+
 
 {% block show_content %}
 
@@ -19,12 +21,21 @@
 {% block extra_script %}
     <script type="text/javascript">
     function map_init_basic (map, options) {
+
         {% for place in places.recommendations %}
-            L.marker([{{ place.location.lat }}, {{ place.location.lng }}]).addTo(map);
+            L.marker();
+            L.marker([{{ place.location.lat }}, {{ place.location.lng }}],
+                {
+                    title: '{{ place.name }}',
+                    riseOnHover: true
+                }
+                ).addTo(map).bindPopup("<b>Name</b> : {{ place.name }}<br><b>Address</b> :"+
+                            "{% for address in place.location.formattedAddress %} {{ address }} {% endfor %}<br><b>Categories</b> :{% for category in place.categories %}  {{ category}} {% endfor %}<br><b>City</b> : {{ place.location.city}}");
+
         {% endfor %}
-
-
-
+        markers.on('clusterclick', function (a) {
+            a.layer.zoomToBounds();
+        });
     }
 </script>
 <style>

@@ -273,9 +273,43 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="active"><a href="/index"><i class="fa fa-columns"></i>  All</a></li>
-                                <li><a href="/places"><i class="fa fa-map-marker"></i>Map</a></li>
-                                <li><a href="/photos"><i class="fa fa-picture-o"></i>Album</a></li>
+                                <li><a href="/rec-places"><i class="fa fa-map-marker"></i>Recommended Places</a></li>
+                                <li><a href="/rec-photos"><i class="fa fa-picture-o"></i>Contextual Photos</a></li>
+                                <li><a href="/rec-products"><i class="fa fa-gift"></i>Recommended Products</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-location-arrow"></i>
+                                <span>Around</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/pic-around"><i class="fa fa-picture-o"></i>Photos</a></li>
+                                <li><a href="/places-around"><i class="fa fa-map-marker"></i>Places</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Products & Services</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/index"><i class="fa fa-gift"></i>Purchases</a></li>
+                                <li><a href="/places"><i class="fa fa-building-o"></i>Stores</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Social</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/statuses"><i class="fa fa-comment"></i>Statuses</a></li>
+                                <li><a href="/places"><i class="fa fa-star"></i>Friends</a></li>
+                                <li><a href="/places"><i class="fa fa-map-marker"></i>Checkins</a></li>
                             </ul>
                         </li>
 
@@ -296,7 +330,7 @@
                 <section class="content-header">
                     <h1>
                         NTUA Demo
-                        <small>All</small>
+                        <small>{% block page_title %}{% endblock %}</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -355,6 +389,10 @@
                });
 
             });
+    </script>
+    <!-- Loader-->
+    <script>
+
     </script>
 
 

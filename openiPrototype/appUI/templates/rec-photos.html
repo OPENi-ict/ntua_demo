@@ -215,45 +215,11 @@
                                 <div class="panel-heading">
                                   <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                      <i class="fa fa-map-marker"></i> Places
-                                    </a>
-                                  </h4>
-                                </div>
-                                <div id="collapseOne" class="panel-collapse collapse in">
-                                  <div class="panel-body">
-                                        <div class="timeline-body">
-                                            {% for place in places.recommendations %}
-                                                <!--img src="{{ place.photoURL }}" alt="{{ place.name }}" class="margin"-->
-                                                <div class="media">
-                                                  <a class="pull-left" href="{{ place.photoURL }}">
-                                                    <img class="media-object" src="{{ place.photoURL }}" alt="{{ place.name }}">
-                                                  </a>
-                                                  <div class="media-body">
-                                                    <h4 class="media-heading">{{ place.name }}</h4>
-                                                  </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-
-                                   </div><!-- /.panel-body -->
-                                    <div class="panel-footer">
-                                        label for="tags">
-                                            #tag, #tag, #tag
-                                        </label><br>
-                                        Places coming from Recommender SE
-                                    </div>
-
-                                </div>
-                              </div>
-                              <div class="panel panel-default">
-                                <div class="panel-heading">
-                                  <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                                       <i class="fa fa-picture-o"></i> Photos
                                     </a>
                                   </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse">
+                                <div id="collapseOne" class="panel-collapse collapse in">
                                   <div class="panel-body">
                                     <div class="timeline-body">
                                             {% for response in photos %}
