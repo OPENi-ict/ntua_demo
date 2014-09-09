@@ -103,9 +103,9 @@ def getRecPlaces(request):
 
     if request.method=='POST':
         if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),local)
+            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
         else:
-            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']))
+            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
     else:
         recommender=queryHandlers.RecommenderSECall(userID, True,True, True,local)
 
@@ -242,7 +242,7 @@ def getPlacesAround(request):
     city=g.city(ip) #this method puts delay on the request, if not needed should be remove
     places=[]
     places=queryHandlers.OpeniCall()
-    placesAround=places.getPlaces(city["city"],'foursquare', user='rom')
+    placesAround=places.getPlaces(city["city"],'foursquare')
     #print placesAround
     args = { "places":placesAround, "user":request.user}
     args.update(csrf(request))

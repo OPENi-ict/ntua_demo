@@ -18,7 +18,7 @@ class RecommenderSECall(object):
         self.timestamp=timestamp
     def getPlaces(self,lat,lng):
         query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
-        full_url="%s%s&user=%s&context=demographics"%(apiURLs.recommenderSE,query,self.userID)
+        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)
         if self.education:
             full_url="%s&context=education"%full_url
         if self.gender:
@@ -48,7 +48,7 @@ class RecommenderSECall(object):
 class OpeniCall(object):
     def __init__(self):
         self.app_name="OPENi"
-        self.user="tsourom"
+        self.user="openihackathon"
         self.tags=''
     def getPhotos(self,lat, lng, cbs, tags=None):
         self.objectName='photo'
@@ -124,7 +124,7 @@ class OpeniCall(object):
             return json.dumps([])
 
     #http://localhost:1988/v.04/photo/?user=romanos.tsouroplis&apps=[{"cbs": "facebook", "app_name": "OPENi"}]&method=get_all_statuses_for_account&data={"account_id": "675350314"}
-    def getStatuses(self,account_id, username, cbs, tags=None):
+    def getStatuses(self,account_id, username=None , cbs=None, tags=None):
         self.objectName='photo'
         self.cbs=cbs
         #self.method='filter_tags_photos'
