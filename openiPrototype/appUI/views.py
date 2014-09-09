@@ -7,7 +7,6 @@ import tzwhere
 import arrow
 import queryHandlers
 import json
-import recommenderParser
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from tzwhere.tzwhere import tzwhere
@@ -55,9 +54,11 @@ def welcome(request):
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
-    query="long=%s&lat=%s"%(lng,lat) #query properties for recommender
+    #Get Places
+    recommender=queryHandlers.RecommenderSECall()
     places=[]
-    places=queryHandlers.getRecommendations(query) #call recommender
+    places=recommender.getPlaces(lat,lng) #call recommender
+
     photos=queryHandlers.OpeniCall()
     photosAround=photos.getPhotos(lat,lng,"instagram")
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "photos":photosAround, "user":request.user}
@@ -81,12 +82,13 @@ def getRecPlaces(request):
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
     if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
-    query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
-    places=[]
-    places=queryHandlers.getRecommendations(query) #call recommender
+    #Get Places from recommender
+    recommender=queryHandlers.RecommenderSECall()
+    places=recommender.getPlaces(lat,lng)
+
     args = { "places":places, "user":request.user}
     args.update(csrf(request))
-    return render_to_response('places.html' , args)
+    return render_to_response('rec-places.html' , args)
 
 def getPhotos(request):
     return render(request, "index.html")
@@ -164,14 +166,10 @@ def getPicAround(request):
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
     if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
-
-    #print "cloudletid:%s"%queryHandlers.CloudletCall()
-
     photos=queryHandlers.OpeniCall()
-    photosAround=photos.getPhotos(lat,lng,"instagram",)
+    photosAround=photos.getPhotos(lat,lng,"instagram")
     args = {"lat":lat, "long":lng, "photos":photosAround, "user":request.user}
     args.update(csrf(request))
-
     return render_to_response('photosAround.html' , args)
 
 
@@ -210,3 +208,21 @@ def getRecPhotos(request):
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "settings":settings, "photos":photosAround, "user":request.user}
     args.update(csrf(request))
     return render_to_response('rec-photos.html' , args)
+
+
+def getPlacesAround(request):
+    g = GeoIP()
+    ip = request.META.get('REMOTE_ADDR', None)
+    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+    city=g.city(ip) #this method puts delay on the request, if not needed should be remove
+    places=[]
+    places=queryHandlers.OpeniCall()
+    placesAround=places.getPlaces(city["city"],'foursquare', user='rom')
+    print placesAround
+    args = { "places":placesAround, "user":request.user}
+    args.update(csrf(request))
+    return render_to_response('places.html' , args)
+
+
+def getCheckins(request):
+    return render(request, "checkins.html")

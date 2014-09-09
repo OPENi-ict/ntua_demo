@@ -6,13 +6,17 @@ import requests
 from requests.exceptions import ConnectionError
 
 
-def getRecommendations(query):
-    response = urllib2.urlopen(
-        "%s%s"%(apiURLs.recommenderSE,query)
-    )
-    response = response.read()
-    response = json.loads(response)
-    return response
+class RecommenderSECall(object):
+    def getPlaces(self,lat,lng):
+        query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
+        full_url="%s%s"%(apiURLs.recommenderSE,query)
+        try:
+            response = requests.get(full_url,timeout=1)
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            response = "No response"
+            return json.dumps({"error":e.message})
 
 
 class OpeniCall(object):
@@ -47,10 +51,34 @@ class OpeniCall(object):
         query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(self.user,str(apps),self.method, str(self.data))
         url = "%s%s/"%(apiURLs.platformAPI,self.objectName)
         full_url = url + '?' + query
-        #print full_url
-        # response=urllib.urlopen(full_url)
-        # response=response.read()
-        # response = json.loads(response)
+        try:
+            response = requests.get(full_url)
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return json.dumps({"error":e.message})
+
+    def getPlaces(self,city, cbs, radius=800, limit=12, user=None,):
+        if user is not None:
+            self.user=user
+        self.objectName='photo'
+        self.cbs=cbs
+        apps=[]
+        app={}
+        app["cbs"]=self.cbs
+        app["app_name"]=self.app_name
+        apps.append(app)
+        self.data={}
+        self.data["near"]=str(city) # not sure if needed to be sent as string or long
+        self.data["radius"]=str(radius)
+        self.data["categoryId"]='4bf58dd8d48988d116941735'
+        self.data["limit"]='12'
+        self.method="search_venues"
+        ##example call: http://147.102.6.98:1988/v.04/photo/?user=romanos&apps=[{"cbs": "foursquare", "app_name": "OPENi"}]&method=search_venues&data={"near": "Athens", "limit": "12", "radius": "800", "categoryId": "4bf58dd8d48988d116941735"}
+        query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(self.user,str(apps),self.method, str(self.data))
+        url = "%s%s/"%(apiURLs.platformAPI,self.objectName)
+        full_url = url + '?' + query
+        print full_url
         try:
             response = requests.get(full_url)
             return response.json()
@@ -58,10 +86,6 @@ class OpeniCall(object):
             print "error: %s" %e
             response = "No response"
             return response
-
-
-
-
 
     #http://localhost:1988/v.04/photo/?user=romanos.tsouroplis&apps=[{"cbs": "facebook", "app_name": "OPENi"}]&method=get_all_statuses_for_account&data={"account_id": "675350314"}
     def getStatuses(self,account_id, username, cbs, tags=None):
@@ -85,10 +109,13 @@ class OpeniCall(object):
         query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(username,str(apps),self.method, str(self.data))
         url = "%s%s/"%(apiURLs.platformAPI,self.objectName)
         full_url = url + '?' + query
-        response=urllib.urlopen(full_url)
-        response=response.read()
-        response = json.loads(response)
-        return response
+        try:
+            response = requests.get(full_url)
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            response = "No response"
+            return response
 
 
 class CloudletCall(object):
@@ -102,16 +129,23 @@ class CloudletCall(object):
         #{ "token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==" }
         token['token']=user_tmp
         token['signature']=self.signature
-        url='%s%s'%(apiURLs.cloudletAPI,'cloudlets')
-        print url
+        full_url='%s%s'%(apiURLs.cloudletAPI,'cloudlets')
+        print full_url
         print token
-        header = {"auth_token": {"token": { "token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==" }},"Connection":"close"}
+        headerCall={}
+        headerCall["auth_token"]=  token
+        print headerCall
+        hdr={"auth_token": { "token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==" }}
+        print(hdr)
         try:
-           r = requests.get(url)
-           print r
+            response = requests.get(full_url,headers=json.dumps(hdr),verify=False)
+            print response.text
+            print(response.json())
+            return response
         except ConnectionError as e:    # This is the correct syntax
-           print "error: %s" %e
-           r = "No response"
+            print "error: %s" %e
+            response = None
+            return response
 
         # response=urllib.urlopen(url)
         # response=response.read()
