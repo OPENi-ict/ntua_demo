@@ -3,21 +3,47 @@ import urllib2,urllib
 import apiURLs
 import json
 import requests
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError,Timeout
 
 
 class RecommenderSECall(object):
+    def __init__(self,userID,education=False, gender=False,age=False, interests=False, timestamp=None):
+        self.userID=userID
+        self.timestamp=timestamp
+        self.education=education
+        self.gender=gender
+        self.age=age
+        self.interests=interests
+    def setTimeStamp(self,timestamp):
+        self.timestamp=timestamp
     def getPlaces(self,lat,lng):
         query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
-        full_url="%s%s"%(apiURLs.recommenderSE,query)
+        full_url="%s%s&user=%s&context=demographics"%(apiURLs.recommenderSE,query,self.userID)
+        if self.education:
+            full_url="%s&context=education"%full_url
+        if self.gender:
+            full_url="%s&context=gender"%full_url
+        if self.age:
+            full_url="%s&context=age"%full_url
+        if self.interests:
+            full_url="%s&context=interests"%full_url
+        if self.timestamp is not None:
+            full_url="%s&timestamp=%s"%(full_url,self.timestamp)
         try:
-            response = requests.get(full_url,timeout=1)
+            response = requests.get(full_url)
+            print "Recommender URL: %s" %full_url
+            #print "got a respone with: %s" %response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
             response = "No response"
             return json.dumps({"error":e.message})
-
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            response = "No response"
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
 class OpeniCall(object):
     def __init__(self):
@@ -57,6 +83,12 @@ class OpeniCall(object):
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
             return json.dumps({"error":e.message})
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            response = "No response"
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
     def getPlaces(self,city, cbs, radius=800, limit=12, user=None,):
         if user is not None:
@@ -84,8 +116,12 @@ class OpeniCall(object):
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
-            response = "No response"
             return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
     #http://localhost:1988/v.04/photo/?user=romanos.tsouroplis&apps=[{"cbs": "facebook", "app_name": "OPENi"}]&method=get_all_statuses_for_account&data={"account_id": "675350314"}
     def getStatuses(self,account_id, username, cbs, tags=None):
@@ -114,8 +150,12 @@ class OpeniCall(object):
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
-            response = "No response"
             return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
 
 class CloudletCall(object):
@@ -146,10 +186,13 @@ class CloudletCall(object):
             print "error: %s" %e
             response = None
             return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            response = "No response"
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
-        # response=urllib.urlopen(url)
-        # response=response.read()
-        # response = json.loads(response)
-        # self.id=response.id
+
         return None
 

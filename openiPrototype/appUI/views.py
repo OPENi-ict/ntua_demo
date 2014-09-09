@@ -6,6 +6,7 @@ import pytz
 import tzwhere
 import arrow
 import queryHandlers
+from checkIfEnabled import checkIfEnabled
 import json
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
@@ -55,10 +56,10 @@ def welcome(request):
     utc2 = arrow.utcnow()
     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
     #Get Places
-    recommender=queryHandlers.RecommenderSECall()
+    recommender=queryHandlers.RecommenderSECall(1)
     places=[]
     places=recommender.getPlaces(lat,lng) #call recommender
-
+    print "places: %s" %places
     photos=queryHandlers.OpeniCall()
     photosAround=photos.getPhotos(lat,lng,"instagram")
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "photos":photosAround, "user":request.user}
@@ -80,13 +81,37 @@ def getRecPlaces(request):
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
-    if ip and (ip!='127.0.0.1'):
+    city=g.city(ip) #this method puts delay on the request, if not needed should be removed
+    settings={}
+    if request.method == 'POST':
+        settings['educationSettings']=request.POST.get("educationSettings", "")
+        settings['genderSettings']=request.POST.get("genderSettings", "")
+        settings['ageSettings']=request.POST.get("ageSettings", "")
+        settings['interestsSettings']=request.POST.get("interestsSettings", "")
+        settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
+        lat=request.POST.get("latitudeTextbox", "")
+        lng=request.POST.get("longitudeTextbox", "")
+        userID=request.POST.get("userID", "")
+        #print settings
+    else:
+        userID=request.user.id
+        if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
-    #Get Places from recommender
-    recommender=queryHandlers.RecommenderSECall()
-    places=recommender.getPlaces(lat,lng)
+    timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
+    utc2 = arrow.utcnow()
+    local = utc2.to(timezone)
 
-    args = { "places":places, "user":request.user}
+    if request.method=='POST':
+        if checkIfEnabled(settings['daytimeSettings']):
+            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),local)
+        else:
+            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']))
+    else:
+        recommender=queryHandlers.RecommenderSECall(userID, True,True, True,local)
+
+    #places=[]
+    places=recommender.getPlaces(lat,lng)
+    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "searchUser":userID}
     args.update(csrf(request))
     return render_to_response('rec-places.html' , args)
 
@@ -218,7 +243,7 @@ def getPlacesAround(request):
     places=[]
     places=queryHandlers.OpeniCall()
     placesAround=places.getPlaces(city["city"],'foursquare', user='rom')
-    print placesAround
+    #print placesAround
     args = { "places":placesAround, "user":request.user}
     args.update(csrf(request))
     return render_to_response('places.html' , args)
@@ -226,3 +251,7 @@ def getPlacesAround(request):
 
 def getCheckins(request):
     return render(request, "checkins.html")
+
+
+def getOrders(request):
+    return render(request, "orders.html")
