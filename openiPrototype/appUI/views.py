@@ -174,8 +174,8 @@ def register(request):
 
 def getStatuses(request):
     statuses=queryHandlers.OpeniCall()
-    statuses=statuses.getStatuses('me','iosif', 'facebook')
-    args = { "statuses":statuses,  "user":request.user}
+    statusesOfMe=statuses.getStatuses('me', 'facebook')
+    args = { "statuses":statusesOfMe,  "user":request.user}
     args.update(csrf(request))
     return render_to_response('timeline.html' , args)
 
@@ -210,27 +210,16 @@ def getRecPhotos(request):
     city=g.city(ip) #this method puts delay on the request, if not needed should be removed
     #print places
     settings={}
-    if request.method == 'POST':
-        settings['locationSettings']=request.POST.get("locationSettings", "")
-        settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
-        settings['profileSettings']=request.POST.get("profileSettings", "")
-        settings['friendsSettings']=request.POST.get("friendsSettings", "")
-        settings['activitySettings']=request.POST.get("activitySettings", "")
-        settings['moodSettings']=request.POST.get("moodSettings", "")
-        settings['weekdaySettings']=request.POST.get("weekdaySettings", "")
-        settings['interestsSettings']=request.POST.get("interestsSettings", "")
-        lat=request.POST.get("latitudeTextbox", "")
-        lng=request.POST.get("longitudeTextbox", "")
-        #print settings
-    else:
-        if ip and (ip!='127.0.0.1'):
-            lat,lng=g.lat_lon(ip)
+
+    if ip and (ip!='127.0.0.1'):
+        lat,lng=g.lat_lon(ip)
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
     photos=queryHandlers.OpeniCall()
     photosAround=photos.getPhotos(lat,lng,"instagram",'shopping, greece, athens')
-    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "settings":settings, "photos":photosAround, "user":request.user}
+    #print photosAround
+    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "photos":photosAround, "user":request.user}
     args.update(csrf(request))
     return render_to_response('rec-photos.html' , args)
 
@@ -254,4 +243,12 @@ def getCheckins(request):
 
 
 def getOrders(request):
+    orders=queryHandlers.OpeniCall()
+    ordersOfUser=orders.getOrders("open-i")
     return render(request, "orders.html")
+
+
+def getShops(request):
+    shops=queryHandlers.OpeniCall()
+    shopsAround=shops.getShops("open-i")
+    return render(request, "shops.html")

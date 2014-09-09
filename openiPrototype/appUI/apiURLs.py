@@ -7,3 +7,4 @@ platformAPI="http://147.102.6.98:1988/v.04/"
 
 cloudletAPI="https://193.1.188.34:443/api/v1/"
 
+swaggerAPI="http://openi.epu.ntua.gr:1988/v.04/"

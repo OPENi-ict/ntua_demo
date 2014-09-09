@@ -1,0 +1,54 @@
+{% extends "base-theme.html" %}
+
+{% block extra_html %}{% endblock %}
+{% load leaflet_tags %}
+
+{% block extra_headers %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock %}
+
+{% block page_title %}Map view{% endblock %}
+
+
+{% block show_content %}
+
+    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript">
+    function map_init_basic (map, options) {
+
+        {% for place in places %}
+            {% for venue in place.venues %}
+            L.marker();
+            L.marker([{{ venue.location.lat }}, {{ venue.location.lng }}],
+                {
+                    title: '{{ place.name }}',
+                    riseOnHover: true
+                }
+                ).addTo(map).bindPopup("<b>Name</b> : {{ venue.name }}<br>");
+
+        {% endfor %}
+    {% endfor %}
+        markers.on('clusterclick', function (a) {
+            a.layer.zoomToBounds();
+        });
+    }
+</script>
+<style>
+
+    .leaflet-container {  /* all maps */
+        width:  100%;
+        height: 500px;
+    }
+
+    #specialbigmap {
+        height: 800px;
+    }
+
+</style>
+{% endblock %}

@@ -90,7 +90,7 @@ class OpeniCall(object):
         except:
             return json.dumps([])
 
-    def getPlaces(self,city, cbs, radius=800, limit=12, user=None,):
+    def getPlaces(self,city, cbs, radius=800, limit=12, user=None):
         if user is not None:
             self.user=user
         self.objectName='photo'
@@ -124,7 +124,7 @@ class OpeniCall(object):
             return json.dumps([])
 
     #http://localhost:1988/v.04/photo/?user=romanos.tsouroplis&apps=[{"cbs": "facebook", "app_name": "OPENi"}]&method=get_all_statuses_for_account&data={"account_id": "675350314"}
-    def getStatuses(self,account_id, username=None , cbs=None, tags=None):
+    def getStatuses(self,account_id, cbs=None, tags=None):
         self.objectName='photo'
         self.cbs=cbs
         #self.method='filter_tags_photos'
@@ -142,7 +142,7 @@ class OpeniCall(object):
         ##if tags:
         ##    self.data['tags']=tags
         ##example call: ### http://147.102.6.98t:1988/v.04/photo/?user=tsourom&apps=[{"cbs": "instagram", "app_name": "OPENi"}]&method=filter_tags_photos&data={"lat": "37.9667", "lng": "23.7167", "tags": ["athens"]}
-        query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(username,str(apps),self.method, str(self.data))
+        query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(self.username,str(apps),self.method, str(self.data))
         url = "%s%s/"%(apiURLs.platformAPI,self.objectName)
         full_url = url + '?' + query
         try:
@@ -157,6 +157,38 @@ class OpeniCall(object):
         except:
             return json.dumps([])
 
+    def getShops(self, cbs, user=None):
+        self.objectName='shop'
+        self.cbs=cbs
+        full_url= "%s%s/?api_key=special-key&format=json"%(apiURLs.swaggerAPI,self.objectName)
+        try:
+            response = requests.get(full_url)
+            print response.text
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+    def getOrders(self, cbs, user=None):
+        self.objectName='order'
+        self.cbs=cbs
+        full_url= "%s%s/?api_key=special-key&format=json"%(apiURLs.swaggerAPI,self.objectName)
+        try:
+            response = requests.get(full_url)
+            print response.text
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
 class CloudletCall(object):
     def __init__(self,signature=None,user=None):
