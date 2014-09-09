@@ -22,18 +22,16 @@
     <script type="text/javascript">
     function map_init_basic (map, options) {
 
-        {% for place in places %}
-            {% for venue in place.venues %}
+        {% for shop in shops.objects %}
             L.marker();
-            L.marker([{{ venue.location.lat }}, {{ venue.location.lng }}],
+            L.marker([{{ shop.place.lat }}, {{ shop.place.lng }}],
                 {
-                    title: '{{ place.name }}',
+                    title: '{{ shop.place.decription }}',
                     riseOnHover: true
                 }
-                ).addTo(map).bindPopup("<b>Name</b> : {{ venue.name }}<br>");
+                ).addTo(map).bindPopup("<b>Name</b> : {{ shop.place.decription }}<br>");
 
         {% endfor %}
-    {% endfor %}
         markers.on('clusterclick', function (a) {
             a.layer.zoomToBounds();
         });

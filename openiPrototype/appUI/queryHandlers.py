@@ -163,7 +163,7 @@ class OpeniCall(object):
         full_url= "%s%s/?api_key=special-key&format=json"%(apiURLs.swaggerAPI,self.objectName)
         try:
             response = requests.get(full_url)
-            print response.text
+            #print response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e

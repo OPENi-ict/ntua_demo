@@ -27,64 +27,24 @@
                                             <th>VAT</th>
                                             <th>Created</th>
                                         </tr>
+                                        {% for order in orders.objects %}
                                         <tr>
-                                            <td>1.</td>
+                                            <td>{{ order.id }}</td>
                                             <td>
                                                 <div>id:</div>
                                                 <div>type:</div>
                                             </td>
                                             <td>
-                                                <div>id:</div>
-                                                <div>username:</div>
+                                                <div>id: {{ order.From.id }}</div>
+                                                <div>username:{{ order.From.name }}</div>
                                             </td>
-                                            <td>Store-id</td>
-                                            <td>2000$</td>
-                                            <td>200$</td>
+                                            <td>{{ order.target_id }}</td>
+                                            <td>{{ order.total_amount }}{{ order.currency }}</td>
+                                            <td>{{ order.vat }}{{ order.currency }}</td>
                                             <td>09-09-2014 13:31:00 GMT+3</td>
                                         </tr>
-                                        <tr>
-                                            <td>1.</td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>type:</div>
-                                            </td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>username:</div>
-                                            </td>
-                                            <td>Store-id</td>
-                                            <td>2000$</td>
-                                            <td>200$</td>
-                                            <td>09-09-2014 13:31:00 GMT+3</td>
-                                        </tr><tr>
-                                            <td>1.</td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>type:</div>
-                                            </td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>username:</div>
-                                            </td>
-                                            <td>Store-id</td>
-                                            <td>2000$</td>
-                                            <td>200$</td>
-                                            <td>09-09-2014 13:31:00 GMT+3</td>
-                                        </tr><tr>
-                                            <td>1.</td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>type:</div>
-                                            </td>
-                                            <td>
-                                                <div>id:</div>
-                                                <div>username:</div>
-                                            </td>
-                                            <td>Store-id</td>
-                                            <td>2000$</td>
-                                            <td>200$</td>
-                                            <td>09-09-2014 13:31:00 GMT+3</td>
-                                        </tr>
+                                        {% endfor %}
+
                                     </table>
                                 </div><!-- /.box-body -->
                                 <div class="box-footer clearfix">

@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.gis.geoip import GeoIP
 import pytz
 import tzwhere
-import arrow
+import arrow, re
+import ast
 import queryHandlers
 from checkIfEnabled import checkIfEnabled
 import json
@@ -245,10 +246,35 @@ def getCheckins(request):
 def getOrders(request):
     orders=queryHandlers.OpeniCall()
     ordersOfUser=orders.getOrders("open-i")
-    return render(request, "orders.html")
+    i=0
+    for order in ordersOfUser["objects"]: #Convert place from text to dictionary - bug needs to be fixed
+        loc=order["From"]
+        loc = loc.replace("u'", "'")
+        loc= re.sub("[^\w]", " ",  loc).split()
+        #loc=ast.literal_eval(loc)
+        #print loc
+        #shopsAround["objects"][i]["place"]={}
+        ordersOfUser["objects"][i]["From"]={"object_type":"%s"%(loc[1]) , "id":"%s"%(loc[3]), "name":"%s"%(loc[5])}
+        i+=1
+    print ordersOfUser
+    args = { "orders":ordersOfUser, "user":request.user}
+    args.update(csrf(request))
+    return render_to_response("orders.html",args)
 
 
 def getShops(request):
     shops=queryHandlers.OpeniCall()
     shopsAround=shops.getShops("open-i")
-    return render(request, "shops.html")
+    i=0
+    for shop in shopsAround["objects"]: #Convert place from text to dictionary - bug needs to be fixed
+        loc=shop["place"]
+        loc = loc.replace("u'", "'")
+        loc= re.sub("[^\w]", " ",  loc).split()
+        #loc=ast.literal_eval(loc)
+        #print loc
+        #shopsAround["objects"][i]["place"]={}
+        shopsAround["objects"][i]["place"]={"lat":"%s.%s"%(loc[1],loc[2]) , "lng":"%s.%s"%(loc[4],loc[5])}
+        i+=1
+    args = { "shops":shopsAround, "user":request.user}
+    args.update(csrf(request))
+    return render_to_response("shops.html",args)
