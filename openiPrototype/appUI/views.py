@@ -79,6 +79,9 @@ def setSystem(request):
 
 ##Methods to connect with OPENi
 def getRecPlaces(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
@@ -174,6 +177,9 @@ def register(request):
 
 
 def getStatuses(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     statuses=queryHandlers.OpeniCall()
     statusesOfMe=statuses.getStatuses('me', 'facebook')
     args = { "statuses":statusesOfMe,  "user":request.user}
@@ -226,6 +232,9 @@ def getRecPhotos(request):
 
 
 def getPlacesAround(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
@@ -240,10 +249,16 @@ def getPlacesAround(request):
 
 
 def getCheckins(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     return render(request, "checkins.html")
 
 
 def getOrders(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     orders=queryHandlers.OpeniCall()
     ordersOfUser=orders.getOrders("open-i")
     i=0
@@ -263,6 +278,9 @@ def getOrders(request):
 
 
 def getShops(request):
+    if not request.user.is_authenticated():
+        # Do something for anonymous users.
+        return HttpResponseRedirect("/login")
     shops=queryHandlers.OpeniCall()
     shopsAround=shops.getShops("open-i")
     i=0
