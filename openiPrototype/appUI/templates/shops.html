@@ -8,7 +8,7 @@
     {% leaflet_css %}
 {% endblock %}
 
-{% block page_title %}Map view{% endblock %}
+{% block page_title %}Shops from OPEN-i Platform (Cloudlet stored){% endblock %}
 
 
 {% block show_content %}
@@ -26,10 +26,10 @@
             L.marker();
             L.marker([{{ shop.place.lat }}, {{ shop.place.lng }}],
                 {
-                    title: '{{ shop.place.decription }}',
+                    title: '{{ shop.description }}',
                     riseOnHover: true
                 }
-                ).addTo(map).bindPopup("<b>Name</b> : {{ shop.place.decription }}<br>");
+                ).addTo(map).bindPopup("<b>Name</b> : {{ shop.description }}<br><b>Service</b> : {{ shop.service }}<br><b>Region</b> : {{ shop.region }}<br><b>Currency</b> : {{ shop.currency }}<br>");
 
         {% endfor %}
         markers.on('clusterclick', function (a) {

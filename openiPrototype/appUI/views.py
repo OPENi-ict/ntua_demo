@@ -293,6 +293,7 @@ def getShops(request):
         #shopsAround["objects"][i]["place"]={}
         shopsAround["objects"][i]["place"]={"lat":"%s.%s"%(loc[1],loc[2]) , "lng":"%s.%s"%(loc[4],loc[5])}
         i+=1
+    #print shopsAround
     args = { "shops":shopsAround, "user":request.user}
     args.update(csrf(request))
     return render_to_response("shops.html",args)
