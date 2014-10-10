@@ -367,8 +367,17 @@ def authorizeSignup(request):
                                             createdBy  = personInstance,
                                             venue =venue).save()
                     print 'created checkin /n'
+                return render_to_response("thanks.html")
     else:
         person = PersonForm()
     args = { "personForm":person, "checkins":checkins, "access":access}
     args.update(csrf(request))
     return render_to_response("syncSignup.html", args)
+
+
+def thanks(request):
+    return None
+
+
+def rateCheckins(request):
+    return None

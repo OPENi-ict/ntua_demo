@@ -11,25 +11,18 @@
     <table class="table table-striped">
         {{ personForm }}
     </table>
-    <input type="submit" value="Submit">
+    <i> * Required fields <br>
+    Note: We do store anonymized data, not your real profile. You have not synced your checkins yet, your profile will be saved on the next page.</i>
+    <br><br>
+        <input type="submit" class= "btn btn-primary" value="Submit">
+
     </form>
-    <ul>
-    {% for checkin in checkins.response.checkins.items %}
-        <li>{{ checkin.id }},{{ checkin.venue.name }},{{ checkin.venue.location.lat }},{{ checkin.venue.location.lng }} </li>
-    {% endfor %}
-    </ul>
+{#    <ul>#}
+{#    {% for checkin in checkins.response.checkins.items %}#}
+{#        <li>{{ checkin.id }},{{ checkin.venue.name }},{{ checkin.venue.location.lat }},{{ checkin.venue.location.lng }} </li>#}
+{#    {% endfor %}#}
+{#    </ul>#}
 
 
-    /* Include the jquery Ui here */
- <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "1900:2012"
-        // You can put more options here.
 
-    });
-  });
-  </script>
 {% endblock %}
