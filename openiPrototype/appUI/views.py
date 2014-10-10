@@ -15,7 +15,11 @@ from tzwhere.tzwhere import tzwhere
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import condition
-
+from appUI.forms import PersonForm
+import foursquare
+#from foursquare import Foursquare
+import apiURLs
+from models import Venue,VenueCategory,Checkin,Person
 
 latitude=23.7
 longitude=37.9
@@ -297,3 +301,74 @@ def getShops(request):
     args = { "shops":shopsAround, "user":request.user}
     args.update(csrf(request))
     return render_to_response("shops.html",args)
+
+
+def authorizeAccounts(request):
+    client = foursquare.Foursquare(client_id=apiURLs.Foursquare_client_id, client_secret=apiURLs.Foursquare_secret_key, redirect_uri='http://127.0.0.1:8000/authorize')
+    if request.GET.get('code')==None:
+        # Construct the client object
+        # Build the authorization url for your app
+        auth_uri = client.oauth.auth_url()
+        print(auth_uri)
+        args = {'4sqAuth':auth_uri}
+        args.update(csrf(request))
+        return render_to_response("syncAccounts.html", args)
+    else:
+        access_token = client.oauth.get_token(request.GET.get('code'))
+        #client.set_access_token(access_token)
+        #print('user: %s'%client.users.checkins)
+        return HttpResponseRedirect("/authorizeSignup?access=%s"%access_token)
+
+
+
+def authorizeSignup(request):
+    if request.GET.get('access'):
+        access = request.GET.get('access')
+    else:
+        access = request.POST.get('access')
+    foursq=queryHandlers.FoursquareCall(access_token=access)
+    #get user profiles
+    user = foursq.getSelf()
+    user_id= user['response']['user']['id']
+    #get user checkins
+    checkins=foursq.getCheckins(USER_ID=user_id)
+
+    if request.method == "POST":
+        person = PersonForm(request.POST)
+        if person.is_valid():
+            if not Person.objects.filter(fsq_user_id=user_id):
+                personInstance = person.save()
+                personInstance.setFsqID(user_id)
+                personInstance.save()
+            else:
+                personInstance= Person.objects.get(fsq_user_id=user_id)
+            # Do something.
+            for checkin in checkins['response']['checkins']['items']:
+                #print checkin
+                if not Checkin.objects.filter(service_id=checkin['id']):
+                    print 'Not stored the checkin'
+                    #create venue
+                    venue = Venue.objects.create(service_id = checkin['venue'].get('id',None) ,
+                                                 name = checkin['venue'].get('name',None),
+                                                 lat= checkin['venue']['location'].get('lat', None),
+                                                 lng =checkin['venue']['location'].get('lng',None) ,
+                                                 cc= checkin['venue']['location'].get('cc',None),
+                                                 city=checkin['venue']['location'].get('city',None),
+                                                 state= checkin['venue']['location'].get('state',None) ,
+                                                 country= checkin['venue']['location'].get('country',None))
+                    venue.save()
+                    #create venue categories
+                    for ctgry in checkin['venue']['categories']:
+                        category=VenueCategory.objects.create(service_id = ctgry.get('id',None) ,name = ctgry.get('name',None), venue=venue)
+                    #create checkin
+                    Checkin.objects.create (service_id = checkin.get('id',None),
+                                            service = 'foursquare',
+                                            createdAt = checkin.get('createdAt',None) ,
+                                            createdBy  = personInstance,
+                                            venue =venue).save()
+                    print 'created checkin /n'
+    else:
+        person = PersonForm()
+    args = { "personForm":person, "checkins":checkins, "access":access}
+    args.update(csrf(request))
+    return render_to_response("syncSignup.html", args)

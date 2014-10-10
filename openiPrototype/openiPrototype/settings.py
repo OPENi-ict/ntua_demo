@@ -36,11 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'appUI',
     'django.contrib.gis.geoip',
     'leaflet',
     'django.contrib.staticfiles',
+    'foursquare',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,6 +51,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
+    "allauth.account.context_processors.account",
+    "django.core.context_processors.media",
+    'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'openiPrototype.urls'

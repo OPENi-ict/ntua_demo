@@ -1,0 +1,11 @@
+{% extends "base-theme.html" %}
+{% block sidebar-menu %}{% endblock %}
+{% block notification-menu %}{% endblock %}
+
+{% block page_title %}Sync your accounts{% endblock %}
+
+{% block show_content %}
+    <a class="btn btn-block btn-social btn-foursquare" href="{{ 4sqAuth }}">
+                                        <i class="fa fa-foursquare"></i> Sign in with Foursquare
+    </a>
+{% endblock %}

@@ -44,6 +44,7 @@
                 Recommender SE
             </a>
             <!-- Header Navbar: style can be found in header.less -->
+            {% block notification-menu %}
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -237,10 +238,12 @@
                     </ul>
                 </div>
             </nav>
+            {% endblock %}
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="left-side sidebar-offcanvas">
+                {% block sidebar-menu %}
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -265,6 +268,7 @@
                     </form>
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
+
                     <ul class="sidebar-menu">
                         <li class="treeview">
                             <a href="#">
@@ -320,8 +324,10 @@
                             </a>
                         </li>
                     </ul>
+
                 </section>
                 <!-- /.sidebar -->
+                {% endblock %}
             </aside>
 
             <!-- Right side column. Contains the navbar and content of the page -->

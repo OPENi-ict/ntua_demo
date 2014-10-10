@@ -228,3 +228,40 @@ class CloudletCall(object):
 
         return None
 
+
+class FoursquareCall(object):
+    def __init__(self, access_token=None):
+        self.version='20141016'
+        self.access_token= access_token
+        self.url='https://api.foursquare.com/v2/'
+
+    def getSelf(self):
+        full_url = "%susers/self?oauth_token=%s&v=%s"%(apiURLs.FoursquareURL, self.access_token,self.version)
+        #print(full_url)
+        try:
+            response = requests.get(full_url, verify=False)
+            #print response
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response.json()
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+    def getCheckins(self,USER_ID=None):
+        full_url = "%susers/%s/checkins?oauth_token=%s&v=%s&limit=250"%(apiURLs.FoursquareURL, USER_ID, self.access_token,self.version)
+        print(full_url)
+        try:
+            response = requests.get(full_url, verify=False)
+            #print response
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response.json()
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
