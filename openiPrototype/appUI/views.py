@@ -331,7 +331,8 @@ def authorizeSignup(request):
     user_id= user['response']['user']['id']
     #get user checkins
     checkins=foursq.getCheckins(USER_ID=user_id)
-
+    if not checkins:
+        checkins=[]
     if request.method == "POST":
         person = PersonForm(request.POST)
         if person.is_valid():
