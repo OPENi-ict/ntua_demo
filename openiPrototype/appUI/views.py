@@ -17,7 +17,6 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import condition
 from appUI.forms import PersonForm
 import foursquare
-#from foursquare import Foursquare
 import FoursquareKeys
 from models import Venue,VenueCategory,Checkin,Person
 
