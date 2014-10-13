@@ -343,10 +343,10 @@ def authorizeSignup(request):
             else:
                 personInstance= Person.objects.get(fsq_user_id=user_id)
             # Do something.
-            for checkin in checkins['response']['checkins']['items']:
+            for checkin in checkins['response']['checkins'].get('items',None):
                 #print checkin
-                if not Checkin.objects.filter(service_id=checkin['id']):
-                    print 'Not stored the checkin'
+                if not Checkin.objects.filter(service_id=checkin.get('id', None)):
+                    #print 'Not stored the checkin'
                     #create venue
                     venue = Venue.objects.create(service_id = checkin['venue'].get('id',None) ,
                                                  name = checkin['venue'].get('name',None),
@@ -358,7 +358,7 @@ def authorizeSignup(request):
                                                  country= checkin['venue']['location'].get('country',None))
                     venue.save()
                     #create venue categories
-                    for ctgry in checkin['venue']['categories']:
+                    for ctgry in checkin['venue'].get('categories',None):
                         category=VenueCategory.objects.create(service_id = ctgry.get('id',None) ,name = ctgry.get('name',None), venue=venue)
                     #create checkin
                     Checkin.objects.create (service_id = checkin.get('id',None),
@@ -366,8 +366,8 @@ def authorizeSignup(request):
                                             createdAt = checkin.get('createdAt',None) ,
                                             createdBy  = personInstance,
                                             venue =venue).save()
-                    print 'created checkin /n'
-                return render_to_response("thanks.html")
+                    #print 'created checkin /n'
+            return render_to_response("thanks.html")
     else:
         person = PersonForm()
     args = { "personForm":person, "checkins":checkins, "access":access}

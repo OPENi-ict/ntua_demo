@@ -32,7 +32,7 @@ class Person(models.Model):
     #user = models.ForeignKey(User,related_name="%(app_label)s_%(class)s_related")
     fsq_user_id = models.CharField("User ID",max_length=100, null=True, blank=True)
     gender= models.CharField("Gender*",max_length=1, choices=GENDER,null=False)
-    educationalLevel=models.CharField("Education Level*",max_length=3, choices=EDU,null=False)
+    educationalLevel=models.CharField("Education Level*",max_length=20, choices=EDU,null=False)
     birthday=models.DateField("Birth date (YYYY-MM-DD)*",blank=False,null=False)
     children= models.CharField("Number of children",max_length=10,choices=CHILDREN,null=True,blank=True)
     married = models.BooleanField("Married",choices=MARRIED,blank=True)
