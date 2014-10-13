@@ -26,7 +26,6 @@ urlpatterns = patterns('',
     url(r'^places-around$', views.getPlacesAround, name='register'),
     url(r'^authorize$', views.authorizeAccounts, name='authorize'),
     url(r'^authorizeSignup', views.authorizeSignup, name='authorizeSignup'),
-    url(r'^thanks$', views.thanks, name='thanks'),
-    url(r'^rateCheckins', views.rateCheckins, name='rateCheckins'),
+    url(r'^terms$', views.terms, name='terms'),
     url(r'^$', views.getRecPlaces, name='welcome'),
 )

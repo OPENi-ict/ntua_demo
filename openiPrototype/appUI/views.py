@@ -374,9 +374,5 @@ def authorizeSignup(request):
     return render_to_response("syncSignup.html", args)
 
 
-def thanks(request):
-    return None
-
-
-def rateCheckins(request):
-    return None
+def terms(request):
+    return render_to_response("terms.html")
