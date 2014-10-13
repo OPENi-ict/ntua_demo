@@ -18,7 +18,7 @@ from django.views.decorators.http import condition
 from appUI.forms import PersonForm
 import foursquare
 #from foursquare import Foursquare
-import apiURLs
+import FoursquareKeys
 from models import Venue,VenueCategory,Checkin,Person
 
 latitude=23.7
@@ -304,7 +304,7 @@ def getShops(request):
 
 
 def authorizeAccounts(request):
-    client = foursquare.Foursquare(client_id=apiURLs.Foursquare_client_id, client_secret=apiURLs.Foursquare_secret_key, redirect_uri='http://127.0.0.1:8000/authorize')
+    client = foursquare.Foursquare(client_id=FoursquareKeys.Foursquare_client_id, client_secret=FoursquareKeys.Foursquare_secret_key, redirect_uri='http://127.0.0.1:8000/authorize')
     if request.GET.get('code')==None:
         # Construct the client object
         # Build the authorization url for your app

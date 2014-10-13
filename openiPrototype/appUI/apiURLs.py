@@ -11,6 +11,3 @@ swaggerAPI="http://openi.epu.ntua.gr:1988/v.04/"
 
 FoursquareURL='https://api.foursquare.com/v2/'
 
-Foursquare_client_id='HV2FH0BSJAPR5TU4CUHHQILIHAMP0VPJTFATZYG4TGFW10T4'
-
-Foursquare_secret_key='DQCSL4F2NXWUC25RCDO4SSQKFN5K52ZE0TITMXSMSNQFCSCU'
