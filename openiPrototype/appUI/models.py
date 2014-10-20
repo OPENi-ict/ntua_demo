@@ -82,5 +82,12 @@ class Checkin (models.Model):
         return "pk=%d , service= %s ,venue=%s, createdAt=%s " % (self.pk,self.service, self.venue.name, self.createdAt)
 
 
-
+class Rating (models.Model):
+    product_id = models.CharField(max_length=100, null=False, blank=False)
+    rate = models.FloatField(null=False,blank=False)
+    createdBy  = models.ForeignKey(Person,related_name="%(app_label)s_%(class)s_related")
+    class Meta:
+        verbose_name_plural = "Ratings"
+    def __unicode__(self):
+        return "pk=%d , product= %s ,rate=%s, createdBy=%s " % (self.pk,self.product_id, self.rate, self.createdBy)
 

@@ -61,3 +61,5 @@ obj/
 openiPrototype/.idea/workspace.xml
 
 openiPrototype/appUI/FoursquareKeys.py
+
+openiPrototype/db.sqlite3

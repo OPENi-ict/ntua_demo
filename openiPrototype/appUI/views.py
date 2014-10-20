@@ -377,3 +377,44 @@ def authorizeSignup(request):
 
 def terms(request):
     return render_to_response("terms.html")
+
+
+def rateProducts(request, product_id):
+    if request.session['user']:
+        user=request.session['user']
+    else:
+        return HttpResponseRedirect("/train/")
+    #get the id from the URL
+
+    if request.method == "POST":
+        print product_id
+        if request.POST.get('rate')!=None:
+            rate=request.POST.get('rate')
+        #store rate and continue
+        pass
+
+    #get a new product ID and navigate to that page
+    product={}
+    product["id"]='321'
+    product["title"]='My Title'
+    product["description"]= "This is a description"
+    args = { "product":product}
+    args.update(csrf(request))
+    return render_to_response("rateProducts.html", args)
+
+
+
+def train(request):
+    if request.method == "POST":
+        person = PersonForm(request.POST)
+        if person.is_valid():
+            personInstance = person.save()
+            request.session['user'] = personInstance.id
+            #get a product ID and navigate to that page
+            productID='123'
+            return HttpResponseRedirect("/rate/%s"%productID)
+    else:
+        person = PersonForm()
+    args = { "personForm":person}
+    args.update(csrf(request))
+    return render_to_response("formForRating.html", args)

@@ -5,8 +5,33 @@
 {% block page_title %}Sync your accounts{% endblock %}
 
 {% block show_content %}
-    <a class="btn btn-block btn-social btn-foursquare" href="{{ 4sqAuth }}">
+
+    <a id="btn" class="btn btn-block btn-social btn-foursquare" href="{{ 4sqAuth }}" disabled>
                                         <i class="fa fa-foursquare"></i> Sign in with Foursquare
     </a>
-    <a href="/terms">Privacy Terms</a>
+    <br>
+    <input id="chck" type="checkbox" name='my_checkbox'> I have read and accept the <a href="/terms">Privacy Terms</a>
+
+
+{% endblock %}
+
+{% block extra_script %}
+
+
+    <script>
+$(document).ready(function(){
+    $("input[type=checkbox]").change(function(){
+        if($(this).is(":checked")){
+            $('#btn').removeAttr('disabled');
+             //$(this).siblings("input[type=checkbox]").removeAttr("checked");
+           }else{
+            $('#btn').attr('disabled', 'disabled');
+           }
+        });
+
+});
+
+
+ </script>
+
 {% endblock %}

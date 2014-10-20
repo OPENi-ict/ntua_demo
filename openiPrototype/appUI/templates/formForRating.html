@@ -1,0 +1,28 @@
+{% extends "base-theme.html" %}
+
+{% block sidebar-menu %}{% endblock %}
+{% block notification-menu %}{% endblock %}
+
+{% block page_title %}Sync your accounts{% endblock %}
+
+{% block show_content %}
+    <form method="post" action="/train/">
+    {% csrf_token %}
+    <table class="table table-striped">
+        {{ personForm }}
+    </table>
+    <i> * Required fields <br>
+    Note: We do store anonymized data, not your real profile. You have not synced your checkins yet, your profile will be saved on the next page.</i>
+    <br><br>
+        <input type="submit" class= "btn btn-primary" value="Submit">
+
+    </form>
+{#    <ul>#}
+{#    {% for checkin in checkins.response.checkins.items %}#}
+{#        <li>{{ checkin.id }},{{ checkin.venue.name }},{{ checkin.venue.location.lat }},{{ checkin.venue.location.lng }} </li>#}
+{#    {% endfor %}#}
+{#    </ul>#}
+
+
+
+{% endblock %}
