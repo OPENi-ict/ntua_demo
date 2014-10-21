@@ -5,7 +5,7 @@ from appUI.models import Person
 class PersonForm(ModelForm):
     class Meta:
         model = Person
-        fields = ['gender', 'educationalLevel','birthday','children', 'married','income','interests']
+        fields = ['gender', 'educationalLevel','birthday','children', 'married','income','interests', 'country','ethnicity']
         widgets = {
             'birthday': DateInput(attrs={'class':'datepicker'}),
         }

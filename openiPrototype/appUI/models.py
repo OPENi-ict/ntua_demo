@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
 
 # Create your models here.
 
@@ -37,7 +38,9 @@ class Person(models.Model):
     children= models.CharField("Number of children",max_length=10,choices=CHILDREN,null=True,blank=True)
     married = models.BooleanField("Married",choices=MARRIED,blank=True)
     income= models.FloatField("Yearly income in euro",null=True,blank=True)
-    interests = models.CharField(max_length=400, null=True, blank=True)
+    interests = models.CharField(help_text="A comma separated list, e.g. 'shopping, soccer, swimming'",max_length=400, null=True, blank=True)
+    country=CountryField(help_text="The country of residence")
+    ethnicity=CountryField(help_text="The country you come from")
     def setFsqID(self, id):
         self.fsq_user_id=id
     class Meta:
@@ -52,9 +55,9 @@ class Venue (models.Model):
     lat= models.FloatField("Yearly income",null=True,blank=True)
     lng = models.FloatField("Yearly income",null=True,blank=True)
     cc= models.CharField(max_length=100, null=True, blank=True)
-    city= models.CharField(max_length=100, null=True, blank=True)
-    state= models.CharField(max_length=100, null=True, blank=True)
-    country= models.CharField(max_length=100, null=True, blank=True)
+    city= models.CharField(max_length=200, null=True, blank=True)
+    state= models.CharField(max_length=200, null=True, blank=True)
+    country= models.CharField(max_length=200, null=True, blank=True)
     class Meta:
         verbose_name_plural = "Venues"
     def __unicode__(self):

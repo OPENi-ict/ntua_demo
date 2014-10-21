@@ -1,9 +1,37 @@
 {% extends "base-theme.html" %}
 
-{% block sidebar-menu %}{% endblock %}
+{% block heading %}Rate products{% endblock %}
+
+
+{% block sidebar-menu %}
+
+    <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+
+
+                    <ul class="sidebar-menu">
+                        <li class="treeview">
+                            <a href="/authorize">
+                                <i class="fa fa-map-marker"></i>
+                                <span>Train Place Recommender</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="/train">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Train Product Recommender</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </section>
+                <!-- /.sidebar -->
+{% endblock %}
 {% block notification-menu %}{% endblock %}
 
-{% block page_title %}Sync your accounts{% endblock %}
+{% block page_title %}Take some time and rate as many as possible!{% endblock %}
 
 {% block show_content %}
     <form method="post" action="/rate/{{ product.id }}">

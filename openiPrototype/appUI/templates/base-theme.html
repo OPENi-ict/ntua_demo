@@ -316,7 +316,17 @@
                                 <li><a href="/checkins"><i class="fa fa-map-marker"></i>Checkins</a></li>
                             </ul>
                         </li-->
-
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-briefcase"></i>
+                                <span>Train</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/authorize"><i class="fa fa-map-marker"></i>Places</a></li>
+                                <li><a href="/train"><i class="fa fa-shopping-cart"></i>Products</a></li>
+                            </ul>
+                        </li>
 
                         <li>
                             <a href="#">
@@ -335,7 +345,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        NTUA Demo
+                        {% block heading %}NTUA Demo{% endblock %}
                         <small>{% block page_title %}{% endblock %}</small>
                     </h1>
                     <ol class="breadcrumb">

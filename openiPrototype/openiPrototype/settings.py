@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'leaflet',
     'django.contrib.staticfiles',
     'foursquare',
+    'django_countries',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,6 +60,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "allauth.account.context_processors.account",
     "django.core.context_processors.media",
     'django.core.context_processors.request',
+    'django.core.context_processors.i18n',
 )
 
 ROOT_URLCONF = 'openiPrototype.urls'
