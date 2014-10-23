@@ -1,4 +1,4 @@
-from django.contrib.gis import geoip
+# encoding=utf-8
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.gis.geoip import GeoIP
@@ -19,7 +19,6 @@ from appUI.forms import PersonForm
 import foursquare
 import FoursquareKeys
 from models import Venue,VenueCategory,Checkin,Person
-
 latitude=23.7
 longitude=37.9
 
@@ -349,13 +348,13 @@ def authorizeSignup(request):
                     #print 'Not stored the checkin'
                     #create venue
                     venue = Venue.objects.create(service_id = checkin['venue'].get('id',None) ,
-                                                 name = checkin['venue'].get('name',None),
+                                                 name = u'%s'%checkin['venue'].get('name',None),
                                                  lat= checkin['venue']['location'].get('lat', None),
                                                  lng =checkin['venue']['location'].get('lng',None) ,
-                                                 cc= checkin['venue']['location'].get('cc',None),
-                                                 city=checkin['venue']['location'].get('city',None),
-                                                 state= checkin['venue']['location'].get('state',None) ,
-                                                 country= checkin['venue']['location'].get('country',None))
+                                                 cc= u'%s'%checkin['venue']['location'].get('cc',None),
+                                                 city=u'%s'%checkin['venue']['location'].get('city',None),
+                                                 state= u'%s'%checkin['venue']['location'].get('state',None),
+                                                 country= u'%s'%checkin['venue']['location'].get('country',None))
                     venue.save()
                     #create venue categories
                     for ctgry in checkin['venue'].get('categories',None):
