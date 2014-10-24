@@ -208,7 +208,7 @@ class CloudletCall(object):
         headerCall["auth_token"]=  token
         print headerCall
         hdr={"auth_token": { "token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==" }}
-        print(hdr)
+        #print(hdr)
         try:
             response = requests.get(full_url,headers=json.dumps(hdr),verify=False)
             print response.text
@@ -252,7 +252,7 @@ class FoursquareCall(object):
             return json.dumps([])
     def getCheckins(self,USER_ID=None):
         full_url = "%susers/%s/checkins?oauth_token=%s&v=%s&limit=250"%(apiURLs.FoursquareURL, USER_ID, self.access_token,self.version)
-        print(full_url)
+        ##print(full_url)
         try:
             response = requests.get(full_url, verify=False)
             #print response

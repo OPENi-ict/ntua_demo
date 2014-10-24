@@ -2,6 +2,21 @@
 
 {% block heading %}Rate products{% endblock %}
 
+{% block extra_headers %}
+    <!-- Ionicons -->
+        <link href="../static/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        <!-- Ion Slider -->
+        <link href="../static/css/ionslider/ion.rangeSlider.css" rel="stylesheet" type="text/css" />
+        <!-- ion slider Nice -->
+        <link href="../static/css/ionslider/ion.rangeSlider.skinNice.css" rel="stylesheet" type="text/css" />
+        <!-- bootstrap slider -->
+        <link href="../static/css/bootstrap-slider/slider.css" rel="stylesheet" type="text/css" />
+    <!-- ion slider Nice -->
+        <link href="../static/css/ionslider/ion.rangeSlider.skinSimple.css" rel="stylesheet" type="text/css" />
+        <link href="../static/css/ionslider/ion.rangeSlider.skinFlat.css" rel="stylesheet" type="text/css" />
+
+{% endblock %}
+
 
 {% block sidebar-menu %}
 
@@ -37,12 +52,49 @@
     <form method="post" action="/rate/{{ product.id }}">
     {% csrf_token %}
 
-    <img src="https://www.apple.com/asia/product-red/images/hero.jpg" width="200" height="200"> <br>
-    <label>Name:</label> {{ product.title }} <br>
-    <label>Description:</label>  {{ product.description }}
+    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Default box -->
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title">{{ product.title }}</h3>
+                                </div>
+                                <div class="box-body">
+                                    <p>
+                                        <span>
+                                            <img src="https://www.apple.com/asia/product-red/images/hero.jpg" width="250" height="250" style="display: block; margin-left: auto;margin-right: auto"> <br>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <label>Description:</label>  {{ product.description }} <br><br>
+                                    </p>
+                                    <p>
 
-    <br><br>
-        <input type="submit" class= "btn btn-primary" value="Submit">
+                                             <input id="example_5" type="text" name="example_5" value="" />
+                                            <small><label>Rate:</label> Rate the product on your intrested in it</small>
+                                    </p>
+                                    <p>
+
+                                                            <!-- small box -->
+                                                            <div id="resultDiv" class="small-box bg-gray">
+                                                                <div class="inner">
+                                                                    <h4 id="ratingScore" style="text-align: center">
+                                                                        Indifferent
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+
+                                    </p>
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <input type="submit" class= "btn btn-primary" style="display: block; margin-left: auto;margin-right: auto;" value="Rate it!">
+                                </div><!-- /.box-footer-->
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+    </div>
+
+
+
 
     </form>
 
@@ -50,4 +102,71 @@
 
 {% block extra_script %}
     <script src="../static/js/AdminLTE/app.js" type="text/javascript"></script>
+    <script src="../static/js/plugins/ionslider/ion.rangeSlider.min.js" type="text/javascript"></script>
+
+        <!-- Bootstrap slider -->
+        <script src="../static/js/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                /* BOOTSTRAP SLIDER */
+                $('.slider').slider();
+
+                /* ION SLIDER */
+
+
+                $("#range_new").ionRangeSlider({ //https://github.com/IonDen/ion.rangeSlider
+                    min: -5,
+                    max: 5,
+                    from: 0,
+                    type: 'single',
+                    step: 1,
+                    postfix: " interested",
+                    prettify: false,
+                    hasGrid: true,
+                    //hideFromTo: true,
+                    //hideMinMax: true,
+                    //values: ["not interested", "might interested", "indifferent", "interested", "very interested"]
+                    onFinish: function (event) {      // callback is called on slider action is finished
+                        //console.log(obj);
+                        alert(event.values[0]);
+                        $('#ratingScore').text('5');
+                    }
+                });
+                $("#example_5").ionRangeSlider({
+                    values: [
+                        "Not interested at all", "Slightly indifferent",
+                        "Indifferent", "Kind interested",
+                        "Very Interested"
+                    ],
+                    from: 2,
+                    type: 'single',
+                    hasGrid: true,
+                    step: 50,
+                    onFinish: function(obj) {
+                        //alert(obj.fromValue);
+                        $('#ratingScore').text(obj.fromValue);
+                        if (obj.fromValue == "Not interested at all"){
+                            $('#resultDiv').removeClass();
+                            $('#resultDiv').addClass('small-box bg-red');
+                        }else if (obj.fromValue=="Slightly indifferent"){
+                            $('#resultDiv').removeClass();
+                            $('#resultDiv').addClass('small-box bg-orange');
+                        }else if (obj.fromValue=="Indifferent"){
+                            $('#resultDiv').removeClass();
+                            $('#resultDiv').addClass('small-box bg-gray');
+                        }else if (obj.fromValue=="Kind interested"){
+                            $('#resultDiv').removeClass();
+                            $('#resultDiv').addClass('small-box bg-blue');
+                        }else if (obj.fromValue=="Very Interested"){
+                            $('#resultDiv').removeClass();
+                            $('#resultDiv').addClass('small-box bg-green');
+                        }
+
+                    }
+                });
+            });
+        </script>
+
 {% endblock %}
+

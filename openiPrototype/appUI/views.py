@@ -62,7 +62,7 @@ def welcome(request):
     recommender=queryHandlers.RecommenderSECall(1)
     places=[]
     places=recommender.getPlaces(lat,lng) #call recommender
-    print "places: %s" %places
+    #print "places: %s" %places
     photos=queryHandlers.OpeniCall()
     photosAround=photos.getPhotos(lat,lng,"instagram")
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "photos":photosAround, "user":request.user}
@@ -379,6 +379,7 @@ def terms(request):
 
 
 def rateProducts(request, product_id):
+
     if request.session['user']:
         user=request.session['user']
     else:
