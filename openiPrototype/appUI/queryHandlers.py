@@ -17,16 +17,28 @@ class RecommenderSECall(object):
     def setTimeStamp(self,timestamp):
         self.timestamp=timestamp
     def getPlaces(self,lat,lng):
-        query="long=%s&lat=%s"%(lng,lat) #query properties for recommender    places=[]
-        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)
+        query="places?long=%s&lat=%s"%(lng,lat) ##Add location properties
+        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)  ##Add user ID
+        ##Add contextual properties
+        context=[]
         if self.education:
-            full_url="%s&context=education"%full_url
+            context.append("education")
         if self.gender:
-            full_url="%s&context=gender"%full_url
+            context.append("gender")
         if self.age:
-            full_url="%s&context=age"%full_url
+            context.append("age")
         if self.interests:
-            full_url="%s&context=interests"%full_url
+            context.append("interests")
+        if not context:
+            full_url="%s&context=all"%full_url
+        else:
+            full_url="%s&context="%full_url
+            for contextProperty in context:
+                full_url="%s%s,"%(full_url,contextProperty)
+            if full_url.endswith(','):
+                full_url = full_url[:-1]
+        ##END: Add contextual properties
+
         if self.timestamp is not None:
             full_url="%s&timestamp=%s"%(full_url,self.timestamp)
         try:
@@ -44,6 +56,66 @@ class RecommenderSECall(object):
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
+
+    def getProducts(self):
+        full_url="%sproducts/?cy=euro&id=%s"%(apiURLs.recommenderSE,self.userID)  ##Add user ID
+        ##Add contextual properties
+        context=[]
+        if self.education:
+            context.append("education")
+        if self.gender:
+            context.append("gender")
+        if self.age:
+            context.append("age")
+        if self.interests:
+            context.append("interests")
+        if not context:
+            full_url="%s&context=all"%full_url
+        else:
+            full_url="%s&context="%full_url
+            for contextProperty in context:
+                full_url="%s%s,"%(full_url,contextProperty)
+            if full_url.endswith(','):
+                full_url = full_url[:-1]
+        ##END: Add contextual properties
+
+        if self.timestamp is not None:
+            full_url="%s&timestamp=%s"%(full_url,self.timestamp)
+
+        try:
+            response = requests.get(full_url)
+            print "Recommender URL: %s" %full_url
+            #print "got a respone with: %s" %response.text
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            #print "error: %s" %e
+            response = "No response"
+            return json.dumps({"error":e.message})
+        except Timeout as t:    # This is the correct syntax
+            #print "Timeout error: %s" %t
+            response = "No response"
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+    def getProductCategories(self):
+        full_url="%sproducts/categories/" %apiURLs.recommenderSE
+        try:
+            response = requests.get(full_url)
+            print "Recommender URL: %s" %full_url
+            #print "got a respone with: %s" %response.text
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            #print "error: %s" %e
+            response = "No response"
+            return json.dumps({"error":e.message})
+        except Timeout as t:    # This is the correct syntax
+            #print "Timeout error: %s" %t
+            response = "No response"
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+    def getApplications(self):
+        pass
 
 class OpeniCall(object):
     def __init__(self):

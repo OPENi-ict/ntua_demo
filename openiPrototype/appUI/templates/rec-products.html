@@ -10,10 +10,10 @@
     {% leaflet_css %}
 {% endblock %}
 
-{% block page_title %}Places coming from Recommender SE{% endblock %}
+{% block page_title %}Products coming from Recommender SE{% endblock %}
 {% block context_settings %}
-                    <div class="col-md-3">
-                        <form action="/rec-places" method="post">{% csrf_token %}
+                    <div class="col-md-4">
+                        <form action="/rec-products" method="post">{% csrf_token %}
                             <div class="col-sm-12">
                                     <!-- Default box -->
                                     <div class="box">
@@ -89,40 +89,7 @@
                                                     </div>
                                                 </div>
                                             </p>
-                                            <p>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label>Location:</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                <div class="col-md-12">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                                    <input type="text" class="form-control" placeholder="latitude" id="latitudeTextbox" name="latitudeTextbox" value="{{ lat }}">
-                                                </div>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                                    <input type="text" class="form-control" placeholder="longitude" id="longitudeTextbox" name="longitudeTextbox" value="{{ long }}">
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="col-md-1">
-                                                        <i class="fa fa-building-o"></i>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        {{ city.city }}
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <i class="fa fa-circle-o"></i>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        {{ city.country_name }}
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                    </div>
-                                            </p>
                                             <div class="row"></div>
                                             <p>
                                                 <div class="row">
@@ -142,13 +109,36 @@
                                                 </div>
                                             </p>
                                             <p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Category:</label>
+                                                    </div>
+                                            <div class="col-md-7">
+                                                <div class="btn-group">
+                                                    <button type="button" name="categorySettings" class="btn btn-default" data-toggle="dropdown">{{ settings.categorySettings | default:'Computing' }}</button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        {%  for category in productCategories %}
+                                                            <li><a href="#">{{ category }}</a></li>
+                                                        {% endfor %}
+
+                                                    </ul>
+                                            </div>
+
+                                            </div>
+                                                </div>
+
+                                            </p>
+
+                                            <p>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label>User ID:</label>
                                                 </div>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                    <input type="text" class="form-control" placeholder="user ID" name="userID" value="{{ searchUser }}">
+                                                <div class="col-md-7">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                        <input type="text" class="form-control" placeholder="user ID" name="userID" value="{{ searchUser }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                             </p>
@@ -167,8 +157,29 @@
 {% endblock %}
 
 {% block show_content %}
-<div class="col-md-9">
-    {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+<div class="col-md-8">
+    <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Picture</th>
+                                            <th>Categories</th>
+                                            <th>Relative</th>
+                                        </tr>
+                                        {% for product in products.recommendations %}
+
+                                        <tr>
+                                            <td><a href="{{ product.url }}">{{ product.name }}</a></td>
+                                            <td>{{ product.description }}</td>
+                                            <td><img src="{{ product.picture }}" alt="{{ product.name }}" style="width:80px;height:80px"></td>
+                                            <td>{% for category in product.categories %}{{ category }}, {% endfor %}</td>
+                                            <td><span class="label label-success">{{ product.score }}</span></td>
+                                        </tr>
+
+                                        {% endfor %}
+                                    </table>
+                                </div><!-- /.box-body -->
 
 </div>
 {% endblock %}

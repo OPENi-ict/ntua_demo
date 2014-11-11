@@ -1,30 +1,4 @@
 {% extends "base-theme.html" %}
-{% block sidebar-menu %}
-    <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-
-
-                    <ul class="sidebar-menu">
-                        <li class="treeview">
-                            <a href="/authorize">
-                                <i class="fa fa-map-marker"></i>
-                                <span>Train Place Recommender</span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="/train">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Train Product Recommender</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </section>
-                <!-- /.sidebar -->
-
-{% endblock %}
 {% block notification-menu %}{% endblock %}
 
 {% block page_title %}Sync your accounts{% endblock %}
@@ -35,7 +9,7 @@
                                         <i class="fa fa-foursquare"></i> Sign in with Foursquare
     </a>
     <br>
-    <input id="chck" type="checkbox" name='my_checkbox'> I have read and accept the <a href="/terms">Privacy Terms</a>
+    <input id="chck" type="checkbox" name='my_checkbox'> I have read and accept the <a href="/terms" target="_blank">Privacy Terms</a>
 
 
 {% endblock %}

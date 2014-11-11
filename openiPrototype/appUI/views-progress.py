@@ -6,7 +6,6 @@ import pytz
 import tzwhere
 import arrow, re
 import ast
-from appUI import apiURLs
 import queryHandlers
 from checkIfEnabled import checkIfEnabled
 import json
@@ -121,48 +120,6 @@ def getRecPlaces(request):
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "searchUser":userID}
     args.update(csrf(request))
     return render_to_response('rec-places.html' , args)
-
-def getRecProducts(request):
-    # if not request.user.is_authenticated():
-    #     # Do something for anonymous users.
-    #     return HttpResponseRedirect("/login")
-    g = GeoIP()
-    ip = request.META.get('REMOTE_ADDR', None)
-    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
-    city=g.city(ip) #this method puts delay on the request, if not needed should be removed
-    settings={}
-    if ip and (ip!='127.0.0.1'):
-            lat,lng=g.lat_lon(ip)
-    if request.method == 'POST':
-        settings['educationSettings']=request.POST.get("educationSettings", "")
-        settings['genderSettings']=request.POST.get("genderSettings", "")
-        settings['ageSettings']=request.POST.get("ageSettings", "")
-        settings['interestsSettings']=request.POST.get("interestsSettings", "")
-        settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
-        settings['categorySettings']=request.POST.get("categorySettings", "")
-        userID=request.POST.get("userID", "")
-        #print settings
-    else:
-        userID=request.user.id
-    timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
-    utc2 = arrow.utcnow()
-    local = utc2.to(timezone)
-
-    if request.method=='POST':
-        if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
-        else:
-            recommender=queryHandlers.RecommenderSECall(userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
-    else:
-        recommender=queryHandlers.RecommenderSECall(userID, True,True, True,local)
-
-    products=recommender.getProducts()
-
-
-    args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "searchUser":userID, "productCategories":apiURLs.recommnederProductCategories}
-    args.update(csrf(request))
-    return render_to_response("rec-products.html",args)
-
 
 def getPhotos(request):
     return render(request, "index.html")
@@ -385,30 +342,26 @@ def authorizeSignup(request):
             else:
                 personInstance= Person.objects.get(fsq_user_id=user_id)
             # Do something.
+            checkinList=[]
             for checkin in checkins['response']['checkins'].get('items',None):
                 #print checkin
-                if not Checkin.objects.filter(service_id=checkin.get('id', None)):
-                    #print 'Not stored the checkin'
-                    #create venue
-                    venue = Venue.objects.create(service_id = checkin['venue'].get('id',None) ,
-                                                 name = u'%s'%checkin['venue'].get('name',None),
-                                                 lat= checkin['venue']['location'].get('lat', None),
-                                                 lng =checkin['venue']['location'].get('lng',None) ,
-                                                 cc= u'%s'%checkin['venue']['location'].get('cc',None),
-                                                 city=u'%s'%checkin['venue']['location'].get('city',None),
-                                                 state= u'%s'%checkin['venue']['location'].get('state',None),
-                                                 country= u'%s'%checkin['venue']['location'].get('country',None))
-                    venue.save()
-                    #create venue categories
-                    for ctgry in checkin['venue'].get('categories',None):
-                        category=VenueCategory.objects.create(service_id = ctgry.get('id',None) ,name = ctgry.get('name',None), venue=venue)
-                    #create checkin
-                    Checkin.objects.create (service_id = checkin.get('id',None),
-                                            service = 'foursquare',
-                                            createdAt = checkin.get('createdAt',None) ,
-                                            createdBy  = personInstance,
-                                            venue =venue).save()
-                    #print 'created checkin /n'
+                categoryList=[]
+                for ctgry in checkin['venue'].get('categories',None):
+                    categoryList.append({"service_id" : ctgry.get('id',None) ,"name" : ctgry.get('name',None)})
+                checkinList.append({'id':checkin.get('id', None), "venue":{"service_id":checkin['venue'].get('id',None),
+                                                                           "name":checkin['venue'].get('name',None),
+                                                                           "lat": checkin['venue']['location'].get('lat', None),
+                                                                           "lng" :checkin['venue']['location'].get('lng',None),
+                                                                           "cc":checkin['venue']['location'].get('cc',None),
+                                                                           "city":checkin['venue']['location'].get('city',None),
+                                                                           "state":checkin['venue']['location'].get('state',None),
+                                                                           "country":checkin['venue']['location'].get('country',None)},
+                                    "checkin":{"service_id":checkin['venue'].get('id',None),
+                                               "service" : 'foursquare',
+                                               "createdAt" : checkin.get('createdAt',None) ,
+                                               "createdBy"  : personInstance},
+                                    "categories":categoryList})
+            storeCheckinsInDatabase(checkinList) ##create all objects simultanuouslu to reduce response time
             return render_to_response("thanks.html")
     else:
         person = PersonForm()
@@ -462,4 +415,46 @@ def train(request):
     args.update(csrf(request))
     return render_to_response("formForRating.html", args)
 
+def storeCheckinsInDatabase(list):
+    categoryList.append({"service_id" : ctgry.get('id',None) ,"name" : ctgry.get('name',None)})
+                checkinList.append({'id':checkin.get('id', None), "venue":{"service_id":checkin['venue'].get('id',None),
+                                                                           "name":checkin['venue'].get('name',None),
+                                                                           "lat": checkin['venue']['location'].get('lat', None),
+                                                                           "lng" :checkin['venue']['location'].get('lng',None),
+                                                                           "cc":checkin['venue']['location'].get('cc',None),
+                                                                           "city":checkin['venue']['location'].get('city',None),
+                                                                           "state":checkin['venue']['location'].get('state',None),
+                                                                           "country":checkin['venue']['location'].get('country',None)},
+                                    "checkin":{"service_id":checkin['venue'].get('id',None),
+                                               "service" : 'foursquare',
+                                               "createdAt" : checkin.get('createdAt',None) ,
+                                               "createdBy"  : personInstance},
+                                    "categories":categoryList})
 
+    for checkin in list:
+
+
+                    #print 'Not stored the checkin'
+                    #create venue
+                    #print checkin
+
+
+                    venue = Venue.objects.create(service_id = checkin['venue'].get('id',None) ,
+                                                 name = u"%s"%checkin['venue'].get('name',None),
+                                                 lat= checkin['venue']['location'].get('lat', None),
+                                                 lng =checkin['venue']['location'].get('lng',None) ,
+                                                 cc= u"%s"%checkin['venue']['location'].get('cc',None),
+                                                 city=u"%s"%checkin['venue']['location'].get('city',None),
+                                                 state= u"%s"%checkin['venue']['location'].get('state',None),
+                                                 country= u"%s"%checkin['venue']['location'].get('country',None))
+                    venue.save()
+                    #create venue categories
+                    for ctgry in checkin['venue'].get('categories',None):
+                        category=VenueCategory.objects.create(service_id = ctgry.get('id',None) ,name = ctgry.get('name',None), venue=venue)
+                    #create checkin
+                    Checkin.objects.create (service_id = checkin.get('id',None),
+                                            service = 'foursquare',
+                                            createdAt = checkin.get('createdAt',None) ,
+                                            createdBy  = personInstance,
+                                            venue =venue).save()
+                    #print 'created checkin /n'
