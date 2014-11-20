@@ -30,5 +30,6 @@ urlpatterns = patterns('',
     url(r'^authorize$', views.authorizeAccounts, name='authorize'),
     url(r'^authorizeSignup', views.authorizeSignup, name='authorizeSignup'),
     url(r'^terms$', views.terms, name='terms'),
+    url(r'^api$', views.recommenderAPI, name='api'),
     url(r'^$', views.getRecPlaces, name='welcome'),
 )

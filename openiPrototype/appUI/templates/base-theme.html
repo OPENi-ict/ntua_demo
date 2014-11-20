@@ -247,16 +247,16 @@
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="../static/img/avatar3.png" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>Hello, {{ user.username }}</p>
-
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
+{#                    <div class="user-panel">#}
+{#                        <div class="pull-left image">#}
+{#                            <img src="../static/img/avatar3.png" class="img-circle" alt="User Image" />#}
+{#                        </div>#}
+{#                        <div class="pull-left info">#}
+{#                            <p>Hello, {{ user.username }}</p>#}
+{##}
+{#                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>#}
+{#                        </div>#}
+{#                    </div>#}
 {#                    <!-- search form -->#}
 {#                    <form action="#" method="get" class="sidebar-form">#}
 {#                        <div class="la-group">#}
@@ -318,10 +318,15 @@
                             </ul>
                         </li>
 
-                        <li>
+                        <li class="treeview">
                             <a href="#">
-                                <i class="fa fa-gear"></i> <span>Account Settings</span>
+                                <i class="fa fa-gear"></i>
+                                <span>Settings</span>
+                                <i class="fa fa-angle-left pull-right"></i>
                             </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/api"><i class="fa fa-book"></i>API Documentation</a></li>
+                            </ul>
                         </li>
                     </ul>
 
@@ -338,10 +343,10 @@
                         {% block heading %}NTUA Demo{% endblock %}
                         <small>{% block page_title %}{% endblock %}</small>
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>
+{#                    <ol class="breadcrumb">#}
+{#                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>#}
+{#                        <li class="active">Dashboard</li>#}
+{#                    </ol>#}
                 </section>
 
                 <!-- Main content -->

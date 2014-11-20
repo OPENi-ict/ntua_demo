@@ -39,8 +39,8 @@ class Person(models.Model):
     married = models.BooleanField("Married",choices=MARRIED,blank=True)
     income= models.FloatField("Yearly income in euro",null=True,blank=True)
     interests = models.CharField(help_text="A comma separated list, e.g. 'shopping, soccer, swimming'",max_length=400, null=True, blank=True)
-    country=CountryField(help_text="The country of residence")
-    ethnicity=CountryField(help_text="The country you come from")
+    country=CountryField("Country*", help_text="The country of residence")
+    ethnicity=CountryField("Ethnicity*", help_text="The country you come from")
     def setFsqID(self, id):
         self.fsq_user_id=id
     class Meta:

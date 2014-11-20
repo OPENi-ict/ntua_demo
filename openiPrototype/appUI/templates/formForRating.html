@@ -1,33 +1,14 @@
 {% extends "base-theme.html" %}
 
-{% block sidebar-menu %}
-    <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
+{% block extra_script %}
 
-
-                    <ul class="sidebar-menu">
-                        <li>
-                            <a href="/authorize">
-                                <i class="fa fa-map-marker"></i>
-                                <span>Train Place Recommender</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/train">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span>Train Product Recommender</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </section>
-                <!-- /.sidebar -->
+    <!-- AdminLTE App -->
+    <script src="../static/js/AdminLTE/app.js" type="text/javascript"></script>
 {% endblock %}
+
 {% block notification-menu %}{% endblock %}
-{% block heading %}Train Product Recommender{% endblock %}
-{% block page_title %}Help us train our recommendation system!{% endblock %}
+{% block heading %}Please fill in the form to start training{% endblock %}
+{% block page_title %}Help us train our product recommendation system!{% endblock %}
 
 {% block show_content %}
     <form method="post" action="/train/">

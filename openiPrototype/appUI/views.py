@@ -463,3 +463,5 @@ def train(request):
     return render_to_response("formForRating.html", args)
 
 
+def recommenderAPI(request):
+    return render_to_response("recommenderAPI.html")
