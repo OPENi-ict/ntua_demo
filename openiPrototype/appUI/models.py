@@ -36,7 +36,7 @@ class Person(models.Model):
     educationalLevel=models.CharField("Education Level*",max_length=20, choices=EDU,null=False)
     birthday=models.DateField("Birth date (YYYY-MM-DD)*",blank=False,null=False)
     children= models.CharField("Number of children",max_length=10,choices=CHILDREN,null=True,blank=True)
-    married = models.BooleanField("Married",choices=MARRIED,blank=True)
+    married = models.BooleanField("Married",choices=MARRIED,blank=True, default=None)
     income= models.FloatField("Yearly income in euro",null=True,blank=True)
     interests = models.CharField(help_text="A comma separated list, e.g. 'shopping, soccer, swimming'",max_length=400, null=True, blank=True)
     country=CountryField("Country*", help_text="The country of residence")

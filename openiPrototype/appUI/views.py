@@ -423,9 +423,9 @@ def terms(request):
 
 def rateProducts(request):
 
-    if request.session['user']:
+    if 'user' in request.session:
         user=request.session['user']
-        print user
+        #print user
     else:
         return HttpResponseRedirect("/train/")
     #if POST, initially store the latest score
@@ -459,6 +459,12 @@ def rateProducts(request):
         products=productsForRate.getProducts(limit=4)
     #print products
     product=products.pop()
+    if product["image"] is None:
+        product=products.pop()
+    if len(products)==0:
+        productsForRate=queryHandlers.ProductDB()
+        products=productsForRate.getProducts(limit=4)
+
     request.session["products"]=products
     # product_show={}
     # product_show["code"]=product["code"]
