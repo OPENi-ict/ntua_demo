@@ -430,22 +430,11 @@ def rateProducts(request):
         return HttpResponseRedirect("/train/")
     #if POST, initially store the latest score
     if request.method == "POST":
-        print request.POST.get('product_code')
+        #print request.POST.get('product_code')
         if request.POST.get('rate')!=None:
             rate=request.POST.get('rate')
         #store rate and continue
-        rating=1
-        if rate == "Not interested at all":
-            rating=1
-        elif rate=="Slightly indifferent":
-            rating=2
-        elif rate=="Indifferent":
-            rating=3
-        elif rate=="Kind interested":
-            rating=4
-        elif rate=="Very Interested":
-            rating=5
-        newRate=Rating.objects.create(createdBy=Person.objects.get(pk=request.session['user']), rate=rating, product_id=request.POST.get('product_code'))
+        newRate=Rating.objects.create(createdBy=Person.objects.get(pk=request.session['user']), rate=rate, product_id=request.POST.get('product_code'))
         newRate.save()
 
     #get a new product ID and navigate to that page
