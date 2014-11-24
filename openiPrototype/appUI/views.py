@@ -19,7 +19,7 @@ from django.views.decorators.http import condition
 from appUI.forms import PersonForm
 import foursquare
 import FoursquareKeys
-from models import Venue,VenueCategory,Checkin,Person
+from models import Venue,VenueCategory,Checkin,Person, Rating
 latitude=23.7
 longitude=37.9
 
@@ -421,26 +421,53 @@ def terms(request):
     return render_to_response("terms.html")
 
 
-def rateProducts(request, product_id):
+def rateProducts(request):
 
     if request.session['user']:
         user=request.session['user']
+        print user
     else:
         return HttpResponseRedirect("/train/")
-    #get the id from the URL
-
+    #if POST, initially store the latest score
     if request.method == "POST":
-        print product_id
+        print request.POST.get('product_code')
         if request.POST.get('rate')!=None:
             rate=request.POST.get('rate')
         #store rate and continue
-        pass
+        rating=1
+        if rate == "Not interested at all":
+            rating=1
+        elif rate=="Slightly indifferent":
+            rating=2
+        elif rate=="Indifferent":
+            rating=3
+        elif rate=="Kind interested":
+            rating=4
+        elif rate=="Very Interested":
+            rating=5
+        newRate=Rating.objects.create(createdBy=Person.objects.get(pk=request.session['user']), rate=rating, product_id=request.POST.get('product_code'))
+        newRate.save()
 
     #get a new product ID and navigate to that page
-    product={}
-    product["id"]='321'
-    product["title"]='My Title'
-    product["description"]= "This is a description"
+    if "products" in request.session:
+        products = request.session["products"]
+    else:
+        products = []
+    #print "products:%s"%products
+    if len(products)==0:
+        productsForRate=queryHandlers.ProductDB()
+        products=productsForRate.getProducts(limit=4)
+    #print products
+    product=products.pop()
+    request.session["products"]=products
+    # product_show={}
+    # product_show["code"]=product["code"]
+    # product_show["name"]=product["name"]
+    # product_show["description"]= ""
+    # product_show ["brand_name"]=product["brand_name"]
+    # product_show ["brand_image"]=product["brand_image"]
+    # product_show["image"]= product["image"]
+    # product_show["category"]=product["gpc_name"]
     args = { "product":product}
     args.update(csrf(request))
     return render_to_response("rateProducts.html", args)
@@ -454,8 +481,7 @@ def train(request):
             personInstance = person.save()
             request.session['user'] = personInstance.id
             #get a product ID and navigate to that page
-            productID='123'
-            return HttpResponseRedirect("/rate/%s"%productID)
+            return HttpResponseRedirect("/rate/new")
     else:
         person = PersonForm()
     args = { "personForm":person}

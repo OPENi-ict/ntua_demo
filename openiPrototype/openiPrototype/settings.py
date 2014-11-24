@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'appUI',
     'django.contrib.gis.geoip',
     'leaflet',
-    'django.contrib.staticfiles',
     'foursquare',
     'django_countries',
 )

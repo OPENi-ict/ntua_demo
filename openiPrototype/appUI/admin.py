@@ -19,3 +19,7 @@ admin.site.register(Checkin, Checkins)
 class Persons(admin.ModelAdmin):
     pass
 admin.site.register(Person, Persons)
+
+class Ratings(admin.ModelAdmin):
+    pass
+admin.site.register(Rating, Ratings)

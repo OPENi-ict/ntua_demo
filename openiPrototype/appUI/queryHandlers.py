@@ -4,7 +4,8 @@ import apiURLs
 import json
 import requests
 from requests.exceptions import ConnectionError,Timeout
-
+from random import randrange
+import json
 
 class RecommenderSECall(object):
     def __init__(self,userID,education=False, gender=False,age=False, interests=False, timestamp=None):
@@ -325,6 +326,35 @@ class FoursquareCall(object):
     def getCheckins(self,USER_ID=None):
         full_url = "%susers/%s/checkins?oauth_token=%s&v=%s&limit=250"%(apiURLs.FoursquareURL, USER_ID, self.access_token,self.version)
         ##print(full_url)
+        try:
+            response = requests.get(full_url, verify=False)
+            #print response
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response.json()
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+
+
+class ProductDB(object):
+    def __init__(self, access_token=None):
+        self.access_token= access_token
+        self.productsIDs=["70000000","68000000","77000000","54000000",
+                          #"53000000",
+                          "83000000","47000000","67000000","66000000","65000000","58000000","78000000","50000000","63000000","51000000","72000000","75000000","73000000","81000000","88000000","61000000","64000000","10000000","79000000","85000000","71000000","62000000","84000000","80000000","82000000","86000000"]
+    def getRandomCategory (self):
+        categories=self.productsIDs
+        # with open('product-categories.json') as f:
+        #     for line in f:
+        #         data.append(json.loads(line))
+        return categories[randrange(len(categories))]
+    def getProducts(self, limit=3):
+        full_url = "%s?limit=%s&category=%s"%(apiURLs.productsDBurl, limit, self.getRandomCategory())
+        print(full_url)
         try:
             response = requests.get(full_url, verify=False)
             #print response

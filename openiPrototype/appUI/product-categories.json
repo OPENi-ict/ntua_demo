@@ -1,0 +1,128 @@
+{
+  "categories": [
+    {
+      "id": "70000000",
+      "name": "Arts - Crafts - Needlework"
+    },
+    {
+      "id": "68000000",
+      "name": "Audio Visual - Photography"
+    },
+    {
+      "id": "77000000",
+      "name": "Automotive"
+    },
+    {
+      "id": "54000000",
+      "name": "Baby Care"
+    },
+    {
+      "id": "53000000",
+      "name": "Beauty - Personal Care - Hygiene"
+    },
+    {
+      "id": "83000000",
+      "name": "Building Products"
+    },
+    {
+      "id": "47000000",
+      "name": "Cleaning - Hygiene Products"
+    },
+    {
+      "id": "67000000",
+      "name": "Clothing"
+    },
+    {
+      "id": "66000000",
+      "name": "Communications"
+    },
+    {
+      "id": "65000000",
+      "name": "Computing"
+    },
+    {
+      "id": "58000000",
+      "name": "Cross Segment"
+    },
+    {
+      "id": "78000000",
+      "name": "Electrical Supplies"
+    },
+    {
+      "id": "50000000",
+      "name": "Food - Beverage - Tobacco"
+    },
+    {
+      "id": "63000000",
+      "name": "Footwear"
+    },
+    {
+      "id": "51000000",
+      "name": "Healthcare"
+    },
+    {
+      "id": "72000000",
+      "name": "Home Appliances"
+    },
+    {
+      "id": "75000000",
+      "name": "Household - Office Furniture - Furnishings"
+    },
+    {
+      "id": "73000000",
+      "name": "Kitchen Merchandise"
+    },
+    {
+      "id": "81000000",
+      "name": "Lawn - Garden Supplies"
+    },
+    {
+      "id": "88000000",
+      "name": "Lubricants"
+    },
+    {
+      "id": "61000000",
+      "name": "Music"
+    },
+    {
+      "id": "64000000",
+      "name": "Personal Accessories"
+    },
+    {
+      "id": "10000000",
+      "name": "Pet Care - Food"
+    },
+    {
+      "id": "79000000",
+      "name": "Plumbing - Heating - Ventilation - Air Conditioning"
+    },
+    {
+      "id": "85000000",
+      "name": "Safety - Protection - DIY"
+    },
+    {
+      "id": "71000000",
+      "name": "Sports Equipment"
+    },
+    {
+      "id": "62000000",
+      "name": "Stationery - Office Machinery - Occasion Supplies"
+    },
+    {
+      "id": "84000000",
+      "name": "Tool Storage - Workshop Aids"
+    },
+    {
+      "id": "80000000",
+      "name": "Tools - Equipment - Hand"
+    },
+    {
+      "id": "82000000",
+      "name": "Tools - Equipment - Power"
+    },
+    {
+      "id": "86000000",
+      "name": "Toys - Games"
+    }
+  ]
+}
