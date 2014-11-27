@@ -13,5 +13,5 @@ swaggerAPI="http://openi.epu.ntua.gr:1988/v.04/"
 
 FoursquareURL='https://api.foursquare.com/v2/'
 
-productsDBurl='http://snf-561492.vm.okeanos.grnet.gr:8080/recommender-se/rest/demo/products/'
+productsDBurl='http://snf-561492.vm.okeanos.grnet.gr:8080/epuDemo/rest/demo/products/'
 

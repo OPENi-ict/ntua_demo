@@ -32,7 +32,7 @@
                             <!-- Default box -->
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><b>Product:</b> {{ product.name |default:"N/A"}}</h3><small>({{ product.code }})</small>
+                                    <h3 class="box-title"><b>Product:</b> {{ product.product_name |default:"N/A"}}</h3><small>({{ product.product_code }})</small>
                                 </div>
                                 <div class="box-body">
                                     <p>
@@ -42,15 +42,15 @@
                                     </p>
                                     <p>
                                         <label>Description:</label>  {{ product.description | default:"N/A" }} <br>
-                                        <label>Category:</label>  {{ product.gpc_name | default:"N/A" }}<br>
-                                        <label>Brand:</label>  {{ product.brand_name | default:"N/A" }}
-                                            <img src="{{ product.brand_logo }}" width="50" height="50" style="display: block; margin-left: auto;margin-right: auto"> <br>
+                                        <label>Category:</label>  {{ product.category_name | default:"N/A" }}<br>
+                                        <label>Brand:</label>  {{ product.brand | default:"N/A" }} | {{ product.gln}}
+                                            <img src="{{ product.brand_image }}" width="50" height="50" style="display: block; margin-left: auto;margin-right: auto"> <br>
 
                                     </p>
                                     <p>
                                             <small><label>Rate:</label> Tell us how much you are interested in buying the objects above</small>
                                              <input id="example_5" type="text" name="rate" value="" />
-                                             <input name="product_code" value="{{ product.code }}" hidden/>
+                                             <input name="product_code" value="{{ product.product_code }}" hidden/>
                                     </p>
                                     <p>
 

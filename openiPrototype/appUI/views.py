@@ -446,13 +446,15 @@ def rateProducts(request):
     if len(products)==0:
         productsForRate=queryHandlers.ProductDB()
         products=productsForRate.getProducts(limit=4)
+        products=products["products"]
     #print products
     product=products.pop()
-    if product["image"] is None:
+    if product["image"]=="":
         product=products.pop()
     if len(products)==0:
         productsForRate=queryHandlers.ProductDB()
-        products=productsForRate.getProducts(limit=4)
+        products=productsForRate.getProducts(limit=5)
+        products=products["products"]
 
     request.session["products"]=products
     # product_show={}

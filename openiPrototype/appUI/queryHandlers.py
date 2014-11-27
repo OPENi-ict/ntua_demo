@@ -353,7 +353,8 @@ class ProductDB(object):
         #         data.append(json.loads(line))
         return categories[randrange(len(categories))]
     def getProducts(self, limit=3):
-        full_url = "%s?limit=%s&category=%s"%(apiURLs.productsDBurl, limit, self.getRandomCategory())
+        #full_url = "%s?limit=%s&category=%s"%(apiURLs.productsDBurl, limit, self.getRandomCategory())
+        full_url = "%s?limit=%s"%(apiURLs.productsDBurl, limit)
         print(full_url)
         try:
             response = requests.get(full_url, verify=False)
