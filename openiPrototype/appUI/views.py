@@ -22,6 +22,10 @@ import FoursquareKeys
 from models import Venue,VenueCategory,Checkin,Person, Rating
 latitude=23.7
 longitude=37.9
+from django.core.urlresolvers import reverse
+import requests
+
+
 
 def signout(request):
     ## Put a check if user is logged in, before!
@@ -443,18 +447,10 @@ def rateProducts(request):
     else:
         products = []
     #print "products:%s"%products
-    if len(products)==0:
-        productsForRate=queryHandlers.ProductDB()
-        products=productsForRate.getProducts(limit=4)
-        products=products["products"]
+    products=checkProductsResults(products)
     #print products
     product=products.pop()
-    if product["image"]=="":
-        product=products.pop()
-    if len(products)==0:
-        productsForRate=queryHandlers.ProductDB()
-        products=productsForRate.getProducts(limit=5)
-        products=products["products"]
+    products=checkProductsResults(products)
 
     request.session["products"]=products
     # product_show={}
@@ -488,3 +484,16 @@ def train(request):
 
 def recommenderAPI(request):
     return render_to_response("recommenderAPI.html")
+
+def checkProductsResults(products):
+    if len(products)==0:
+        productsForRate=queryHandlers.ProductDB()
+        products=productsForRate.getProducts(limit=5)
+        products=products["products"]
+        for prod in products:
+            response = requests.get(prod["image"], verify=False) #load the photo and see if the resource is there
+            if (response.status_code != 200):
+                products.remove(prod)
+        if len(products)==0:
+            checkProductsResults(products)
+    return products
