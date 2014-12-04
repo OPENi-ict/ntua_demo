@@ -6,10 +6,13 @@ import requests
 from requests.exceptions import ConnectionError,Timeout
 from random import randrange
 import json
+from django.utils.dateformat import format as timeformat
+
+
 
 class RecommenderSECall(object):
-    def __init__(self,userID,education=False, gender=False,age=False, interests=False, timestamp=None):
-        self.userID=userID
+    def __init__(self,token,education=False, gender=False,age=False, interests=False, timestamp=None):
+        self.token=token
         self.timestamp=timestamp
         self.education=education
         self.gender=gender
@@ -19,7 +22,7 @@ class RecommenderSECall(object):
         self.timestamp=timestamp
     def getPlaces(self,lat,lng):
         query="places?long=%s&lat=%s"%(lng,lat) ##Add location properties
-        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)  ##Add user ID
+        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,1)#self.userID)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -41,7 +44,7 @@ class RecommenderSECall(object):
         ##END: Add contextual properties
 
         if self.timestamp is not None:
-            full_url="%s&timestamp=%s"%(full_url,self.timestamp)
+            full_url="%s&timestamp=%s"%(full_url,timeformat(self.timestamp,u'U'))
         try:
             response = requests.get(full_url)
             print "Recommender URL: %s" %full_url
@@ -50,16 +53,21 @@ class RecommenderSECall(object):
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
             response = "No response"
-            return json.dumps({"error":e.message})
+            return json.dumps({"error":"connection error"})
         except Timeout as t:    # This is the correct syntax
             print "Timeout error: %s" %t
             response = "No response"
             return json.dumps({"error":t.message})
+        except requests.exceptions.RequestException as e:
+            if self.request.retries >= self.max_retries:
+                print "max retries: %s" %e
+                return json.dumps({"error":"max retries"})
+            raise self.retry(exc=e)
         except:
             return json.dumps([])
 
     def getProducts(self):
-        full_url="%sproducts/?cy=euro&id=%s"%(apiURLs.recommenderSE,self.userID)  ##Add user ID
+        full_url="%sproducts/?cy=euro&id=%s"%(apiURLs.recommenderSE,1)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -91,7 +99,7 @@ class RecommenderSECall(object):
         except ConnectionError as e:    # This is the correct syntax
             #print "error: %s" %e
             response = "No response"
-            return json.dumps({"error":e.message})
+            return json.dumps({"error":"connection error"})
         except Timeout as t:    # This is the correct syntax
             #print "Timeout error: %s" %t
             response = "No response"
@@ -108,7 +116,7 @@ class RecommenderSECall(object):
         except ConnectionError as e:    # This is the correct syntax
             #print "error: %s" %e
             response = "No response"
-            return json.dumps({"error":e.message})
+            return json.dumps({"error":"connection error"})
         except Timeout as t:    # This is the correct syntax
             #print "Timeout error: %s" %t
             response = "No response"
@@ -119,10 +127,11 @@ class RecommenderSECall(object):
         pass
 
 class OpeniCall(object):
-    def __init__(self):
+    def __init__(self,token=None):
         self.app_name="OPENi"
         self.user="openihackathon"
         self.tags=''
+        self.token=token
     def getPhotos(self,lat, lng, cbs, tags=None):
         self.objectName='photo'
         self.cbs=cbs
@@ -155,7 +164,7 @@ class OpeniCall(object):
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
-            return json.dumps({"error":e.message})
+            return json.dumps({"error":"connection error"})
         except Timeout as t:    # This is the correct syntax
             print "Timeout error: %s" %t
             response = "No response"
@@ -262,6 +271,32 @@ class OpeniCall(object):
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
+    def getContext(self, objectID=None):
+        self.objectName='Context'
+        self.cbs='openi'
+        if (objectID==None):
+            full_url= "%s%s/"%(apiURLs.ntuaPlatformAPI,'Context')
+        else:
+            full_url= "%s%s/%s/"%(apiURLs.ntuaPlatformAPI,'Context', objectID)
+        print full_url
+        try:
+            header={"Authorization":self.token}
+            response = requests.get(full_url,headers=header)
+            #print response.text
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except requests.exceptions.RequestException as e:
+            if self.request.retries >= self.max_retries:
+                print "max retries: %s" %e
+                return json.dumps({"error":"connection error"})
+            raise self.retry(exc=e)
+        except:
+            return json.dumps([])
 
 class CloudletCall(object):
     def __init__(self,signature=None,user=None):
@@ -359,6 +394,53 @@ class ProductDB(object):
         try:
             response = requests.get(full_url, verify=False)
             #print response
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response.json()
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
+
+
+class OPENiOAuth(object):
+    def __init__(self):
+        self.access_token= None
+        self.session= None
+        self.created= None
+        self.status_code=None
+    def getAccessToken(self):
+        return self.access_token
+    def getSession(self, username, password):
+        full_url = "%ssession"%(apiURLs.demo2APIoAuth)
+        print(full_url)
+        try:
+            data={"name":username,"password":password}
+            response = requests.post(full_url, data, verify=False)
+            #print response
+            self.status_code=response.status_code
+            self.session=response.json()["session"]
+            print self.session
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            self.access_token=None
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            self.access_token=None
+        except:
+            self.access_token=None
+    def authorize(self, username, password):
+        self.getSession(username,password)
+        full_url = "%sauthorize"%(apiURLs.demo2APIoAuth)
+        print(full_url)
+        try:
+            data={"session":self.session,"client_id":username}
+            response = requests.post(full_url, data, verify=False)
+            #print response
+            self.status_code=response.status_code
+            self.access_token=response.json()["token"]
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e

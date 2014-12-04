@@ -14,6 +14,7 @@
     <form method="post" action="/train/">
     {% csrf_token %}
     <table class="table table-striped">
+{#        {{ ageForm }}#}
         {{ personForm }}
     </table>
     <i> * Required fields <br>

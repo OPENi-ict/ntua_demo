@@ -26,6 +26,18 @@ class Person(models.Model):
     ('4', '4'),
     ('M', 'more than 4'),
     )
+    INCOME=(
+        (1, '<5,000'),
+        (2, '5,000-9,999'),
+        (3, '10,000-14,999'),
+        (4, '15,000-19,999'),
+        (5, '20,000-24,999'),
+        (6, '25,000-29,999'),
+        (7, '30,000-34,999'),
+        (8, '35,000-49,999'),
+        (9, '50,000-150,000'),
+        (10, '>150,000'),
+    )
     MARRIED = (
     (True, 'Yes'),
     (False, 'No')
@@ -34,10 +46,10 @@ class Person(models.Model):
     fsq_user_id = models.CharField("User ID",max_length=100, null=True, blank=True)
     gender= models.CharField("Gender*",max_length=1, choices=GENDER,null=False)
     educationalLevel=models.CharField("Education Level*",max_length=20, choices=EDU,null=False)
-    birthday=models.DateField("Birth date (YYYY-MM-DD)*",blank=False,null=False)
+    birthday=models.DateField("Birth date (YYYY-MM-DD)*",blank=True,null=False)
     children= models.CharField("Number of children",max_length=10,choices=CHILDREN,null=True,blank=True)
-    married = models.BooleanField("Married",choices=MARRIED,blank=True, default=None)
-    income= models.FloatField("Yearly income in euro",null=True,blank=True)
+    married = models.BooleanField("Married",choices=MARRIED,blank=True, default=False)
+    income= models.FloatField("Yearly income in euro",choices=INCOME, default=None, null=True,blank=True)
     interests = models.CharField(help_text="A comma separated list, e.g. 'shopping, soccer, swimming'",max_length=400, null=True, blank=True)
     country=CountryField("Country*", help_text="The country of residence")
     ethnicity=CountryField("Ethnicity*", help_text="The country you come from")
@@ -47,6 +59,23 @@ class Person(models.Model):
         verbose_name_plural = "Persons"
     def __unicode__(self):
         return "pk=%d ,  fsq_user_id=%s, gender=%s" % (self.pk,self.fsq_user_id, self.gender)
+
+class AgeGroup(models.Model):
+    AGE = (
+    (1, '13-17'),
+    (2, '18-24'),
+    (3, '25-34'),
+    (4, '35-44'),
+    (5, '45-54'),
+    (6, '55-64'),
+    (7, '65+'),
+    )
+    person=models.ForeignKey(Person,related_name="%(app_label)s_%(class)s_related")
+    ageGroup=models.IntegerField("Age Group*",choices=AGE, blank=False,null=False)
+    class Meta:
+        verbose_name_plural = "AgeGroups"
+    def __unicode__(self):
+        return "pk=%d ,  person=%s, gender=%s" % (self.pk,self.person, self.ageGroup)
 
 
 class Venue (models.Model):

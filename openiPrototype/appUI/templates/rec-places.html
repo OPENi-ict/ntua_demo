@@ -144,16 +144,26 @@
                                             <p>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label>User ID:</label>
+                                                    <label>Token:</label>
                                                 </div>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                    <input type="text" class="form-control" placeholder="user ID" name="userID" value="{{ searchUser }}">
+                                                    <input type="text" class="form-control" placeholder="User Token" name="userID" value="{{ token }}">
                                                 </div>
                                             </div>
                                             </p>
 
+
                              </div>
+                                        <div class="panel-footer">
+                                            {% for context in context.objects%}
+                                                <b>age</b>: {{ context.personalization.age_range }}<br>
+                                                <b>gender</b>: {{ context.personalization.gender }}<br>
+                                                <b>interests</b>: {% for interest in context.personalization.interests %}{{ interest }}{% endfor %}<br>
+
+                                            {% endfor %}
+                                            Context coming from User's Cloudlet
+                                        </div>
                                         </div><!-- /.box -->
                              </div>
                              <div class="col-sm-12">
@@ -167,8 +177,47 @@
 {% endblock %}
 
 {% block show_content %}
-<div class="col-md-9">
+<div class="col-md-4">
     {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+</div>
+<div class="col-md-5">
+
+    <div class="panel-group" id="accordion">
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                      <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                          <i class="fa fa-map-marker"></i> Places
+                                        </a>
+                                      </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                      <div class="panel-body">
+                                            <div class="timeline-body">
+                                                {% for place in places.recommendations %}
+                                                    <div class="media">
+
+                                                      <div class="media-body">
+                                                        <h4 class="media-heading">{{ place.name }}</h4>
+                                                          {% for address in place.location.formattedAddress %}
+                                                              {{ address }}
+                                                          {% endfor %}
+                                                          <br><b>Categories</b> :{% for category in place.categories %}  {{ category}} {% endfor %}
+                                                          <br><b>City</b> : {{ place.location.city}}
+                                                           <hr>
+                                                      </div>
+
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+
+                                       </div><!-- /.panel-body -->
+
+
+                                    </div>
+                                  </div>
+    </div>
 
 </div>
 {% endblock %}

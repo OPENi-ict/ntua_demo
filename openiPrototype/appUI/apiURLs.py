@@ -15,3 +15,7 @@ FoursquareURL='https://api.foursquare.com/v2/'
 
 productsDBurl='http://snf-561492.vm.okeanos.grnet.gr:8080/epuDemo/rest/demo/products/'
 
+demo2APIoAuth='https://demo2.openi-ict.eu:443/uaa/'
+
+ntuaPlatformAPI='http://imagine.epu.ntua.gr:1988/v.04/'
+
