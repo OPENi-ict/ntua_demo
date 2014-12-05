@@ -11,18 +11,19 @@ from django.utils.dateformat import format as timeformat
 
 
 class RecommenderSECall(object):
-    def __init__(self,token,education=False, gender=False,age=False, interests=False, timestamp=None):
+    def __init__(self,token,userID=None, education=False, gender=False,age=False, interests=False, timestamp=None):
         self.token=token
         self.timestamp=timestamp
         self.education=education
         self.gender=gender
         self.age=age
         self.interests=interests
+        self.userID=userID
     def setTimeStamp(self,timestamp):
         self.timestamp=timestamp
     def getPlaces(self,lat,lng):
         query="places?long=%s&lat=%s"%(lng,lat) ##Add location properties
-        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,1)#self.userID)  ##Add user ID
+        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)#self.userID)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -46,7 +47,8 @@ class RecommenderSECall(object):
         if self.timestamp is not None:
             full_url="%s&timestamp=%s"%(full_url,timeformat(self.timestamp,u'U'))
         try:
-            response = requests.get(full_url)
+            header={"Authorization":self.token}
+            response = requests.get(full_url,headers=header)
             print "Recommender URL: %s" %full_url
             #print "got a respone with: %s" %response.text
             return response.json()
@@ -66,8 +68,8 @@ class RecommenderSECall(object):
         except:
             return json.dumps([])
 
-    def getProducts(self):
-        full_url="%sproducts/?cy=euro&id=%s"%(apiURLs.recommenderSE,1)  ##Add user ID
+    def getProducts(self, category=None):
+        full_url="%sproducts/?cy=euro&sortParam=sum&id=%s&category='%s'"%(apiURLs.recommenderSE,self.userID,category)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -92,7 +94,8 @@ class RecommenderSECall(object):
             full_url="%s&timestamp=%s"%(full_url,self.timestamp)
 
         try:
-            response = requests.get(full_url)
+            header={"Authorization":self.token}
+            response = requests.get(full_url,headers=header)
             print "Recommender URL: %s" %full_url
             #print "got a respone with: %s" %response.text
             return response.json()

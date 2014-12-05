@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^welcome$', views.getRecPlaces, name='welcome'),
-    url(r'^index$', views.welcome, name='welcome'),
+    #url(r'^index$', views.welcome, name='welcome'),
     url(r'^login$', views.signin, name='login'),
     url(r'^logout$', views.signout, name='logout'),
     url(r'^rec-places$', views.getRecPlaces, name='rec-places'),

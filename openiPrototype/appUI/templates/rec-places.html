@@ -18,7 +18,7 @@
                                     <!-- Default box -->
                                     <div class="box">
                                         <div class="box-header">
-                                            <h4 class="box-title">Context</h4>
+                                            <h4 class="box-title">Context Settings</h4>
                                         </div>
                                         <div class="box-body">
                                             <p>
@@ -141,14 +141,30 @@
                                                 </div>
                                                 </div>
                                             </p>
+                                            <hr>
+                                            <p>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>User:</label>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                        <input type="text" class="form-control" placeholder="userid" name="userID" value="{{ username }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </p>
                                             <p>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label>Token:</label>
                                                 </div>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                    <input type="text" class="form-control" placeholder="User Token" name="userID" value="{{ token }}">
+                                                <div class="col-md-7">
+                                                    <div class="input-group">
+
+                                                        <input type="text" class="form-control" placeholder="user token" name="token" value="{{ token }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                             </p>
@@ -156,13 +172,16 @@
 
                              </div>
                                         <div class="panel-footer">
-                                            {% for context in context.objects%}
-                                                <b>age</b>: {{ context.personalization.age_range }}<br>
-                                                <b>gender</b>: {{ context.personalization.gender }}<br>
-                                                <b>interests</b>: {% for interest in context.personalization.interests %}{{ interest }}{% endfor %}<br>
+                                        <div class="box-header">
+                                            <h4 class="box-title">Context from Cloudlet</h4>
+                                        </div>
 
-                                            {% endfor %}
-                                            Context coming from User's Cloudlet
+                                                <b>Age</b>: {{ context.personalization.age_range }}<br>
+                                                <b>Income</b>: {{ context.personalization.income }}<br>
+                                                <b>Gender</b>: {{ context.personalization.gender }}<br>
+                                                <b>Interests</b>: {% for interest in context.personalization.interests %}{{ interest }}{% endfor %}<br>
+                                                <b>Education</b>: {{ context.personalization.education }}<br>
+
                                         </div>
                                         </div><!-- /.box -->
                              </div>

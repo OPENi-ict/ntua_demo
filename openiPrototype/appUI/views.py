@@ -34,50 +34,50 @@ def signout(request):
     # Redirect to a success page.
     return HttpResponseRedirect("/login")
 
-def welcome(request):
-    # if not request.user.is_authenticated():
-    #     # Do something for anonymous users.
-    #     return HttpResponseRedirect("/login")
-    lat=23.7
-    if request.session.get('openi-token')==None:
-            return HttpResponseRedirect("/login")
-    # elif OPENiAuthorization().checkIfExpired(request.session.get('token-created')):
-    #         return HttpResponseRedirect("/login")
-    lng= 37.9
-    g = GeoIP()
-    ip = request.META.get('REMOTE_ADDR', None)
-    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
-    city=g.city(ip) #this method puts delay on the request, if not needed should be removed
-    #print places
-    settings={}
-    if request.method == 'POST':
-        settings['locationSettings']=request.POST.get("locationSettings", "")
-        settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
-        settings['profileSettings']=request.POST.get("profileSettings", "")
-        settings['friendsSettings']=request.POST.get("friendsSettings", "")
-        settings['activitySettings']=request.POST.get("activitySettings", "")
-        settings['moodSettings']=request.POST.get("moodSettings", "")
-        settings['weekdaySettings']=request.POST.get("weekdaySettings", "")
-        settings['interestsSettings']=request.POST.get("interestsSettings", "")
-        lat=request.POST.get("latitudeTextbox", "")
-        lng=request.POST.get("longitudeTextbox", "")
-        #print settings
-    else:
-        if ip and (ip!='127.0.0.1'):
-            lat,lng=g.lat_lon(ip)
-    timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
-    utc2 = arrow.utcnow()
-    local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
-    #Get Places
-    recommender=queryHandlers.RecommenderSECall(1)
-    places=[]
-    places=recommender.getPlaces(lat,lng) #call recommender
-    #print "places: %s" %places
-    #photos=queryHandlers.OpeniCall()
-    #photosAround=photos.getPhotos(lat,lng,"instagram")
-    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "user":request.user}
-    args.update(csrf(request))
-    return render_to_response('index.html' , args)
+# def welcome(request):
+#     # if not request.user.is_authenticated():
+#     #     # Do something for anonymous users.
+#     #     return HttpResponseRedirect("/login")
+#     lat=23.7
+#     if request.session.get('openi-token')==None:
+#             return HttpResponseRedirect("/login")
+#     # elif OPENiAuthorization().checkIfExpired(request.session.get('token-created')):
+#     #         return HttpResponseRedirect("/login")
+#     lng= 37.9
+#     g = GeoIP()
+#     ip = request.META.get('REMOTE_ADDR', None)
+#     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+#     city=g.city(ip) #this method puts delay on the request, if not needed should be removed
+#     #print places
+#     settings={}
+#     if request.method == 'POST':
+#         settings['locationSettings']=request.POST.get("locationSettings", "")
+#         settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
+#         settings['profileSettings']=request.POST.get("profileSettings", "")
+#         settings['friendsSettings']=request.POST.get("friendsSettings", "")
+#         settings['activitySettings']=request.POST.get("activitySettings", "")
+#         settings['moodSettings']=request.POST.get("moodSettings", "")
+#         settings['weekdaySettings']=request.POST.get("weekdaySettings", "")
+#         settings['interestsSettings']=request.POST.get("interestsSettings", "")
+#         lat=request.POST.get("latitudeTextbox", "")
+#         lng=request.POST.get("longitudeTextbox", "")
+#         #print settings
+#     else:
+#         if ip and (ip!='127.0.0.1'):
+#             lat,lng=g.lat_lon(ip)
+#     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
+#     utc2 = arrow.utcnow()
+#     local = utc2.to(timezone).format('YYYY-MM-DD HH:mm:ss')
+#     #Get Places
+#     recommender=queryHandlers.RecommenderSECall(request.session.get('openi-token'))
+#     places=[]
+#     places=recommender.getPlaces(lat,lng) #call recommender
+#     #print "places: %s" %places
+#     #photos=queryHandlers.OpeniCall()
+#     #photosAround=photos.getPhotos(lat,lng,"instagram")
+#     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "settings":settings, "user":request.user}
+#     args.update(csrf(request))
+#     return render_to_response('index.html' , args)
 
 def widgets(request):
     return render(request, "widgets.html")
@@ -109,31 +109,39 @@ def getRecPlaces(request):
         settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
         lat=request.POST.get("latitudeTextbox", "")
         lng=request.POST.get("longitudeTextbox", "")
-        token=request.POST.get("userID", "")
+        token=request.POST.get("token", "")
+        userID=request.POST.get("userID", "")
         #print settings
     else:
         token=request.session.get('openi-token')
+        userID=request.session.get('username')
         if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone)
 
+    username=userID
+    for user in FoursquareKeys.users:
+        if user['username']==userID:
+            userID=user['id']
+            break
+
     if request.method=='POST':
         if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
+            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
         else:
-            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
+            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
     else:
-        recommender=queryHandlers.RecommenderSECall(token, True,True, True,local)
+        recommender=queryHandlers.RecommenderSECall(token,userID, True,True, True,local)
 
     #places=[]
     openiCall=queryHandlers.OpeniCall(token=token)
-    context=openiCall.getContext()
+    context=openiCall.getContext(objectID=userID)
     #print context
     places=recommender.getPlaces(lat,lng)
     #print places
-    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "token":token, "context":context}
+    args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "token":token, "context":context, "userID":userID, "username":username}
     args.update(csrf(request))
     return render_to_response('rec-places.html' , args)
 
@@ -155,26 +163,36 @@ def getRecProducts(request):
         settings['interestsSettings']=request.POST.get("interestsSettings", "")
         settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
         settings['categorySettings']=request.POST.get("categorySettings", "")
-        token=request.POST.get("userID", "")
+        token=request.session.get('openi-token')
+        userID=request.POST.get("userID", "")
         #print settings
     else:
+        settings['categorySettings']='All'
         token=request.session.get('openi-token')
+        userID=request.session.get('username')
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone)
 
+    for user in FoursquareKeys.users:
+        if user['username']==userID:
+            userID=user['id']
+            break
+    openiCall=queryHandlers.OpeniCall(token=token)
+    context=openiCall.getContext(objectID=userID)
+
     if request.method=='POST':
         if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
+            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
         else:
-            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
+            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
     else:
-        recommender=queryHandlers.RecommenderSECall(token, True,True, True,local)
+        recommender=queryHandlers.RecommenderSECall(token,userID, True,True, True,local)
 
-    products=recommender.getProducts()
+    products=recommender.getProducts(category=settings['categorySettings'])
 
 
-    args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories}
+    args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories, "username":userID, "context":context}
     args.update(csrf(request))
     return render_to_response("rec-products.html",args)
 
@@ -200,10 +218,11 @@ def signin(request):
         #print oAuthCall.getAccessToken()
         if oAuthCall.status_code==200:
             request.session["openi-token"]=oAuthCall.getAccessToken()
+            request.session["username"]=username
             #request.session["token-created"]=datetime.now()
-            print oAuthCall.getAccessToken()
-            print "token: %s"%request.session.get('openi-token')
-            print "token: %s"%request.session.get('openi-tokens')
+            # print oAuthCall.getAccessToken()
+            # print "token: %s"%request.session.get('openi-token')
+            # print "token: %s"%request.session.get('openi-tokens')
             if request.session.get("openi-token")!=None:
                 print "just stored %s" %request.session.get('openi-token')
             #print request.session["openi-token"]

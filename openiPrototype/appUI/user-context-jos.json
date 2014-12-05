@@ -14,14 +14,14 @@
   "device_wireless_channel_quality": "",
   "time_deleted": "",
   "current_location_longitude": "",
-  "personalization_interests": "jogging, fish tank, reading, travelling, business, startup, coding, mac",
+  "personalization_interests": "cinema, games, basketball, movies, fitness, fish tank, reading, travel, business, startup, programming, mac",
   "personalization_carrier": "Wind",
   "device_running_applications": "",
   "personalization_opt_out": "",
   "personalization_postal_code": "",
   "application_text_copy": "",
   "current_location_latitude": "",
-  "objectid": "1",
+  "objectid": "",
   "duration_time_ended": "",
   "address_country": "Greece",
   "personalization_ethnicity": "Greek",
@@ -70,5 +70,5 @@
   "duration_time_started": "",
   "mood_value": "relaxed"
 },
-  "email": "alvertisjo@hotmail.com",
+  "email": "jos@jos.com",
 }
