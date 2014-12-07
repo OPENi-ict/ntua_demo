@@ -21,8 +21,8 @@ class RecommenderSECall(object):
         self.userID=userID
     def setTimeStamp(self,timestamp):
         self.timestamp=timestamp
-    def getPlaces(self,lat,lng):
-        query="places?long=%s&lat=%s"%(lng,lat) ##Add location properties
+    def getPlaces(self,lat,lng,rad=3000):
+        query="places?long=%s&lat=%s&rad=%s"%(lng,lat,rad) ##Add location properties
         full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)#self.userID)  ##Add user ID
         ##Add contextual properties
         context=[]
@@ -69,7 +69,10 @@ class RecommenderSECall(object):
             return json.dumps([])
 
     def getProducts(self, category=None):
-        full_url="%sproducts/?cy=euro&sortParam=sum&id=%s&category='%s'"%(apiURLs.recommenderSE,self.userID,category)  ##Add user ID
+        if str(category).lower()=='all':
+            full_url="%sproducts/?cy=euro&sortParam=sum&id=%s"%(apiURLs.recommenderSE,self.userID)  ##Add user ID
+        else:
+            full_url="%sproducts/?cy=euro&sortParam=sum&id=%s&category='%s'"%(apiURLs.recommenderSE,self.userID,category)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -175,7 +178,7 @@ class OpeniCall(object):
         except:
             return json.dumps([])
 
-    def getPlaces(self,city, cbs, radius=800, limit=12, user=None):
+    def getPlaces(self,city, cbs, radius=3000, limit=20, user=None):
         if user is not None:
             self.user=user
         self.objectName='photo'

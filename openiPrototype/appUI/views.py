@@ -167,13 +167,14 @@ def getRecProducts(request):
         userID=request.POST.get("userID", "")
         #print settings
     else:
-        settings['categorySettings']='All'
+        settings['categorySettings']='all'
         token=request.session.get('openi-token')
         userID=request.session.get('username')
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone)
 
+    username=userID
     for user in FoursquareKeys.users:
         if user['username']==userID:
             userID=user['id']
@@ -192,7 +193,7 @@ def getRecProducts(request):
     products=recommender.getProducts(category=settings['categorySettings'])
 
 
-    args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories, "username":userID, "context":context}
+    args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories, "username":username, "context":context}
     args.update(csrf(request))
     return render_to_response("rec-products.html",args)
 

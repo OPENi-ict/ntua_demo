@@ -1,7 +1,5 @@
 {% extends "base-theme.html" %}
 
-{% block notification-menu %}{% endblock %}
-
 {% block extra_html %}{% endblock %}
 {% load leaflet_tags %}
 
@@ -115,15 +113,15 @@
                                                     </div>
                                             <div class="col-md-7">
                                                 <div class="btn-group">
-                                                    <button type="button" id="categoryButton" class="btn btn-default" data-toggle="dropdown">{{ settings.categorySettings | default:'All' }}</button>
+                                                    <button type="button" id="categoryButton" class="btn btn-default" data-toggle="dropdown">{{ settings.categorySettings | default:'all' }}</button>
                                                     <ul class="dropdown-menu" role="menu">
-                                                        <li><a class="categoryLink" href="#">All</a></li>
+                                                        <li><a class="categoryLink" href="#">all</a></li>
                                                         {%  for category in productCategories %}
                                                             <li><a class="categoryLink" href="#">{{ category }}</a></li>
                                                         {% endfor %}
 
                                                     </ul>
-                                                    <input id="categoryProduct" name="categorySettings" hidden="hidden" value="{{ settings.categorySettings | default:'All' }}">
+                                                    <input id="categoryProduct" name="categorySettings" hidden="hidden" value="{{ settings.categorySettings | default:'all' }}">
                                                     <script>
                                                         $(".categoryLink").click(function(){
                                                             $("#categoryProduct").val($(this).text());
@@ -141,10 +139,10 @@
                                             <hr>
                                             <p>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <label>User:</label>
                                                 </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-10">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                                         <input type="text" class="form-control" placeholder="userid" name="userID" value="{{ username }}">
@@ -154,12 +152,11 @@
                                             </p>
                                             <p>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <label>Token:</label>
                                                 </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-10">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                                         <input type="text" class="form-control" placeholder="user token" name="token" value="{{ token }}">
                                                     </div>
                                                 </div>

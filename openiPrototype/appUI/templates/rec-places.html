@@ -1,7 +1,5 @@
 {% extends "base-theme.html" %}
 
-{% block notification-menu %}{% endblock %}
-
 {% block extra_html %}{% endblock %}
 {% load leaflet_tags %}
 
@@ -132,7 +130,7 @@
                                                 <div class="col-md-7">
                                                     <!-- Single button -->
                                                     <div class="btn-group">
-                                                      <input class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="daytimeSettings" value="{{ settings.daytimeSettings | default:'On' }}" size="7"/>
+                                                      <input class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="daytimeSettings" value="{{ settings.daytimeSettings | default:'Off' }}" size="7"/>
                                                       <ul class="dropdown-menu" role="menu">
                                                         <li><a>On</a></li>
                                                         <li><a class="label-danger">Off</a></li>
@@ -144,10 +142,10 @@
                                             <hr>
                                             <p>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <label>User:</label>
                                                 </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-10">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                                         <input type="text" class="form-control" placeholder="userid" name="userID" value="{{ username }}">
@@ -157,10 +155,10 @@
                                             </p>
                                             <p>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <label>Token:</label>
                                                 </div>
-                                                <div class="col-md-7">
+                                                <div class="col-md-10">
                                                     <div class="input-group">
 
                                                         <input type="text" class="form-control" placeholder="user token" name="token" value="{{ token }}">

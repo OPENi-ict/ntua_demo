@@ -63,3 +63,9 @@ openiPrototype/.idea/workspace.xml
 openiPrototype/appUI/FoursquareKeys.py
 
 openiPrototype/db.sqlite3
+
+openiPrototype/appUI/user-context-jos.json
+
+openiPrototype/appUI/user-context-evmorfia.json
+
+openiPrototype/appUI/user-context-dpano.json
