@@ -319,13 +319,23 @@ def getPlacesAround(request):
         return HttpResponseRedirect("/login")
     # elif OPENiAuthorization().checkIfExpired(request.session.get('token-created')):
     #         return HttpResponseRedirect("/login")
+    lat=23.7
+    lng= 37.9
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
     ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
-    city=g.city(ip) #this method puts delay on the request, if not needed should be remove
+    if ip and (ip!='127.0.0.1'):
+            lat,lng=g.lat_lon(ip)
     places=[]
-    places=queryHandlers.OpeniCall()
-    placesAround=places.getPlaces(city["city"],'foursquare')
+    #places=queryHandlers.OpeniCall()
+    #placesAround=places.getPlaces(city["city"],'foursquare')
+
+    if request.session.get('4sq-token'):
+        access = request.session.get('4sq-token')
+        places=queryHandlers.FoursquareCall(access_token=access)
+        placesAround=places.getPlacesAround(lat,lng)
+    else:
+        placesAround=[]
     #print placesAround
     args = { "places":placesAround, "user":request.user}
     args.update(csrf(request))
@@ -400,6 +410,7 @@ def authorizeAccounts(request):
         access_token = client.oauth.get_token(request.GET.get('code'))
         #client.set_access_token(access_token)
         #print('user: %s'%client.users.checkins)
+        request.session['4sq-token']=access_token
         return HttpResponseRedirect("/authorizeSignup?access=%s"%access_token)
 
 

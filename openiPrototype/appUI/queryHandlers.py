@@ -379,6 +379,21 @@ class FoursquareCall(object):
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
+    def getPlacesAround(self, lat,lng,radius=3000):
+        full_url = "%svenues/search?oauth_token=%s&v=%s&ll=%s,%s&limit=50"%(apiURLs.FoursquareURL, self.access_token,self.version,lat,lng)
+        print(full_url)
+        try:
+            response = requests.get(full_url, verify=False)
+            #print response
+            return response.json()
+        except ConnectionError as e:    # This is the correct syntax
+            print "error: %s" %e
+            return response.json()
+        except Timeout as t:    # This is the correct syntax
+            print "Timeout error: %s" %t
+            return json.dumps({"error":t.message})
+        except:
+            return json.dumps([])
 
 
 class ProductDB(object):
