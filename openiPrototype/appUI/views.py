@@ -96,9 +96,11 @@ def getRecPlaces(request):
             return HttpResponseRedirect("/login")
     # elif OPENiAuthorization().checkIfExpired(request.session.get('token-created')):
     #         return HttpResponseRedirect("/login")
+    lat=50.85
+    lng= 4.35
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
-    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+    #ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
     city=g.city(ip) #this method puts delay on the request, if not needed should be removed
     settings={}
     if request.method == 'POST':
@@ -319,11 +321,11 @@ def getPlacesAround(request):
         return HttpResponseRedirect("/login")
     # elif OPENiAuthorization().checkIfExpired(request.session.get('token-created')):
     #         return HttpResponseRedirect("/login")
-    lat=23.7
-    lng= 37.9
+    lat=50.85
+    lng= 4.35
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
-    ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+    #ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
     if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
     places=[]
