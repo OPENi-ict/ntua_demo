@@ -22,10 +22,6 @@ from models import Venue,VenueCategory,Checkin,Person, Rating
 #from supportingClasses import OPENiAuthorization
 from datetime import datetime
 
-latitude=23.7
-longitude=37.9
-
-
 
 def signout(request):
     ## Put a check if user is logged in, before!
@@ -100,8 +96,10 @@ def getRecPlaces(request):
     lng= 4.35
     g = GeoIP()
     ip = request.META.get('REMOTE_ADDR', None)
-    #ip='147.102.1.1' #test IP for localhost requests. Remove on deployment
+
+    #ip='195.177.247.202' #test IP for localhost requests. Remove on deployment
     city=g.city(ip) #this method puts delay on the request, if not needed should be removed
+
     settings={}
     if request.method == 'POST':
         settings['educationSettings']=request.POST.get("educationSettings", "")
@@ -119,28 +117,30 @@ def getRecPlaces(request):
         userID=request.session.get('username')
         if ip and (ip!='127.0.0.1'):
             lat,lng=g.lat_lon(ip)
+
+    #print "%s %s" %(lat, lng)
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
     utc2 = arrow.utcnow()
     local = utc2.to(timezone)
 
     username=userID
-    for user in FoursquareKeys.users:
-        if user['username']==userID:
-            userID=user['id']
-            break
+    # for user in FoursquareKeys.users:
+    #     if user['username']==userID:
+    #         userID=user['id']
+    #         break
 
     if request.method=='POST':
         if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
+            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
         else:
-            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
+            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
     else:
-        recommender=queryHandlers.RecommenderSECall(token,userID, True,True, True,local)
+        recommender=queryHandlers.RecommenderSECall(token, True,True, True,local)
 
     #places=[]
     openiCall=queryHandlers.OpeniCall(token=token)
-    context=openiCall.getContext(objectID=userID)
-    #print context
+    context=openiCall.getContext()
+    context=context["result"][0]["@data"]["context"]
     places=recommender.getPlaces(lat,lng)
     #print places
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "token":token, "context":context, "userID":userID, "username":username}
@@ -165,11 +165,13 @@ def getRecProducts(request):
         settings['interestsSettings']=request.POST.get("interestsSettings", "")
         settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
         settings['categorySettings']=request.POST.get("categorySettings", "")
+        settings['methodRecommendation']=request.POST.get("methodRecommendation", "")
         token=request.session.get('openi-token')
         userID=request.POST.get("userID", "")
         #print settings
     else:
         settings['categorySettings']='all'
+        settings['methodRecommendation']='count'
         token=request.session.get('openi-token')
         userID=request.session.get('username')
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
@@ -177,22 +179,24 @@ def getRecProducts(request):
     local = utc2.to(timezone)
 
     username=userID
-    for user in FoursquareKeys.users:
-        if user['username']==userID:
-            userID=user['id']
-            break
+    #for user in FoursquareKeys.users:
+        # if user['username']==userID:
+        #     userID=user['id']
+        #     break
     openiCall=queryHandlers.OpeniCall(token=token)
-    context=openiCall.getContext(objectID=userID)
+    context=openiCall.getContext()
+    context=context["result"][0]["@data"]["context"]
+
 
     if request.method=='POST':
         if checkIfEnabled(settings['daytimeSettings']):
-            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
+            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']),local)
         else:
-            recommender=queryHandlers.RecommenderSECall(token,userID, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
+            recommender=queryHandlers.RecommenderSECall(token, checkIfEnabled(settings['educationSettings']),checkIfEnabled(settings['genderSettings']), checkIfEnabled(settings['ageSettings']),checkIfEnabled(settings['interestsSettings']) )
     else:
-        recommender=queryHandlers.RecommenderSECall(token,userID, True,True, True,local)
+        recommender=queryHandlers.RecommenderSECall(token, True,True, True,local)
 
-    products=recommender.getProducts(category=settings['categorySettings'])
+    products=recommender.getProducts(category=settings['categorySettings'], method=settings['methodRecommendation'])
 
 
     args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories, "username":username, "context":context}
@@ -217,10 +221,12 @@ def signin(request):
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         oAuthCall=queryHandlers.OPENiOAuth()
-        oAuthCall.authorize(username,password)
+        oAuthCall.getSession(username,password)
+        print oAuthCall.getSessionToken()
         #print oAuthCall.getAccessToken()
-        if oAuthCall.status_code==200:
-            request.session["openi-token"]=oAuthCall.getAccessToken()
+        if oAuthCall.status_code ==200:
+            #request.session["openi-token"]=oAuthCall.getAccessToken()
+            request.session["openi-token"]=oAuthCall.getSessionToken()
             request.session["username"]=username
             #request.session["token-created"]=datetime.now()
             # print oAuthCall.getAccessToken()

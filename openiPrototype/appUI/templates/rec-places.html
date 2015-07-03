@@ -174,11 +174,11 @@
                                             <h4 class="box-title">Context from Cloudlet</h4>
                                         </div>
 
-                                                <b>Age</b>: {{ context.personalization.age_range }}<br>
-                                                <b>Income</b>: {{ context.personalization.income }}<br>
-                                                <b>Gender</b>: {{ context.personalization.gender }}<br>
-                                                <b>Interests</b>: {% for interest in context.personalization.interests %}{{ interest }}{% endfor %}<br>
-                                                <b>Education</b>: {{ context.personalization.education }}<br>
+                                                <b>Age</b>: {{ context.personalization_age_range }}<br>
+                                                <b>Income</b>: {{ context.personalization_income }}<br>
+                                                <b>Gender</b>: {{ context.personalization_gender }}<br>
+                                                <b>Interests</b>: {% for interest in context.personalization_interests %}{{ interest }}{% endfor %}<br>
+                                                <b>Education</b>: {{ context.personalization_education }}<br>
 
                                         </div>
                                         </div><!-- /.box -->

@@ -11,19 +11,19 @@ from django.utils.dateformat import format as timeformat
 
 
 class RecommenderSECall(object):
-    def __init__(self,token,userID=None, education=False, gender=False,age=False, interests=False, timestamp=None):
+    def __init__(self,token, education=False, gender=False,age=False, interests=False, timestamp=None):
         self.token=token
         self.timestamp=timestamp
         self.education=education
         self.gender=gender
         self.age=age
         self.interests=interests
-        self.userID=userID
+
     def setTimeStamp(self,timestamp):
         self.timestamp=timestamp
     def getPlaces(self,lat,lng,rad=3000):
         query="places?long=%s&lat=%s&rad=%s"%(lng,lat,rad) ##Add location properties
-        full_url="%s%s&id=%s"%(apiURLs.recommenderSE,query,self.userID)#self.userID)  ##Add user ID
+        full_url="%s%s"%(apiURLs.recommenderSE,query)#self.userID)  ##Add user ID
         ##Add contextual properties
         context=[]
         if self.education:
@@ -68,12 +68,12 @@ class RecommenderSECall(object):
         except:
             return json.dumps([])
 
-    def getProducts(self, category=None):
-        if str(category).lower()=='all':
-            full_url="%sproducts/?cy=euro&sortParam=sum&id=%s"%(apiURLs.recommenderSE,self.userID)  ##Add user ID
-        else:
-            full_url="%sproducts/?cy=euro&sortParam=sum&id=%s&category='%s'"%(apiURLs.recommenderSE,self.userID,category)  ##Add user ID
+    def getProducts(self, category=None, method=None):
+        extraString=""
+        if str(category).lower()!='all':
+            extraString="&category=%s"%category
         ##Add contextual properties
+        full_url="%sproducts/?currency=euro&shop=12&sortParam=%s%s"%(apiURLs.recommenderSE,method,extraString)  ##Add user ID
         context=[]
         if self.education:
             context.append("education")
@@ -100,7 +100,7 @@ class RecommenderSECall(object):
             header={"Authorization":self.token}
             response = requests.get(full_url,headers=header)
             print "Recommender URL: %s" %full_url
-            #print "got a respone with: %s" %response.text
+            print "got a respone with: %s" %response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             #print "error: %s" %e
@@ -280,11 +280,7 @@ class OpeniCall(object):
     def getContext(self, objectID=None):
         self.objectName='Context'
         self.cbs='openi'
-        if (objectID==None):
-            full_url= "%s%s/"%(apiURLs.ntuaPlatformAPI,'Context')
-        else:
-            full_url= "%s%s/%s/"%(apiURLs.ntuaPlatformAPI,'Context', objectID)
-        print full_url
+        full_url= "%s"%(apiURLs.searchAPIPath)
         try:
             header={"Authorization":self.token}
             response = requests.get(full_url,headers=header)
@@ -434,11 +430,14 @@ class OPENiOAuth(object):
         self.status_code=None
     def getAccessToken(self):
         return self.access_token
+    def getSessionToken(self):
+        return self.session
     def getSession(self, username, password):
-        full_url = "%ssession"%(apiURLs.demo2APIoAuth)
+        full_url = "%ssessions"%(apiURLs.demo2APIoAuth)
         print(full_url)
         try:
-            data={"name":username,"password":password}
+            #data={"username":username,"password":password, "scope":""}
+            data='{"username":"%s","password":"%s", "scope":""}'%(username,password)
             response = requests.post(full_url, data, verify=False)
             #print response
             self.status_code=response.status_code
@@ -454,7 +453,7 @@ class OPENiOAuth(object):
             self.access_token=None
     def authorize(self, username, password):
         self.getSession(username,password)
-        full_url = "%sauthorize"%(apiURLs.demo2APIoAuth)
+        full_url = "%sauthorizations"%(apiURLs.demo2APIoAuth)
         print(full_url)
         try:
             data={"session":self.session,"client_id":username}

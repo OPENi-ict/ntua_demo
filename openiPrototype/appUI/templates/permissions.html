@@ -2,7 +2,7 @@
 <html class="bg-black">
     <head>
         <meta charset="UTF-8">
-        <title>OPENi DEMO | Log in</title>
+        <title>OPENi DEMO | Permissions Required </title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -25,21 +25,11 @@
             <form action="/login" method="post">{% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="username"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password"/>
-                    </div>          
-                    <div class="form-group">
-                        <input type="checkbox" name="remember_me"/> Remember me
+                        <textarea type="text" name="username" class="form-control" placeholder="username"/>
                     </div>
                 </div>
-                <div class="footer">                                                               
-                    <button type="submit" class="btn bg-olive btn-block">Sign me in</button>  
-                    
-                    <p><a href="#">I forgot my password</a></p>
-                    
-                    <a href="/register" class="text-center">Register a new membership</a>
+                <div class="footer">
+                    <button type="submit" class="btn bg-olive btn-block">I agree</button>
                 </div>
             </form>
 

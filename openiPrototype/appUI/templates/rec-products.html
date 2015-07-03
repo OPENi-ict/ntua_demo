@@ -136,6 +136,35 @@
                                                 </div>
 
                                             </p>
+                                        <p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Method of recommendation:</label>
+                                                    </div>
+                                            <div class="col-md-7">
+                                                <div class="btn-group">
+                                                    <button type="button" id="methodButton" class="btn btn-default" data-toggle="dropdown">{{ settings.methodRecommendation | default:'count' }}</button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a class="methodLink" href="#">count</a></li>
+                                                        <li><a class="methodLink" href="#">sum</a></li>
+                                                        <li><a class="methodLink" href="#">mean</a></li>
+
+                                                    </ul>
+                                                    <input id="methodRec" name="methodRecommendation" hidden="hidden" value="{{ settings.methodRecommendation | default:'count' }}">
+                                                    <script>
+                                                        $(".methodLink").click(function(){
+                                                            $("#methodRec").val($(this).text());
+                                                            //alert ($(this).text());
+                                                        });
+
+
+                                                    </script>
+                                            </div>
+
+                                            </div>
+                                                </div>
+
+                                            </p>
                                             <hr>
                                             <p>
                                             <div class="row">
@@ -169,11 +198,11 @@
                                             <h4 class="box-title">Context from Cloudlet</h4>
                                         </div>
 
-                                                <b>Age</b>: {{ context.personalization.age_range }}<br>
-                                                <b>Income</b>: {{ context.personalization.income }}<br>
-                                                <b>Gender</b>: {{ context.personalization.gender }}<br>
-                                                <b>Interests</b>: {% for interest in context.personalization.interests %}{{ interest }}{% endfor %}<br>
-                                                <b>Education</b>: {{ context.personalization.education }}<br>
+                                                <b>Age</b>: {{ context.personalization_age_range }}<br>
+                                                <b>Income</b>: {{ context.personalization_income }}<br>
+                                                <b>Gender</b>: {{ context.personalization_gender }}<br>
+                                                <b>Interests</b>: {% for interest in context.personalization_interests %}{{ interest }}{% endfor %}<br>
+                                                <b>Education</b>: {{ context.personalization_education }}<br>
 
                                         </div>
                                         </div><!-- /.box -->
