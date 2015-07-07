@@ -68,7 +68,7 @@ class RecommenderSECall(object):
         except:
             return json.dumps([])
 
-    def getProducts(self, category=None, method=None):
+    def getProducts(self, category=None, method=None, shopId=None):
         extraString=""
         if str(category).lower()!='all':
             extraString="&category=%s"%category
@@ -99,8 +99,8 @@ class RecommenderSECall(object):
         try:
             header={"Authorization":self.token}
             response = requests.get(full_url,headers=header)
-            print "Recommender URL: %s" %full_url
-            print "got a respone with: %s" %response.text
+            #print "Recommender URL: %s" %full_url
+            #print "got a respone with: %s" %response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             #print "error: %s" %e
@@ -116,7 +116,7 @@ class RecommenderSECall(object):
         full_url="%sproducts/categories/" %apiURLs.recommenderSE
         try:
             response = requests.get(full_url)
-            print "Recommender URL: %s" %full_url
+            #print "Recommender URL: %s" %full_url
             #print "got a respone with: %s" %response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
@@ -149,7 +149,7 @@ class OpeniCall(object):
         self.data={}
         self.data["lat"]=str(lat) # not sure if needed to be sent as string or long
         self.data["lng"]=str(lng)
-        print tags
+        #print tags
         if tags!=None:
             searchtags=[]
             for tag in tags.split(','):
@@ -169,10 +169,10 @@ class OpeniCall(object):
             response = requests.get(full_url)
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
-            print "error: %s" %e
+            #print "error: %s" %e
             return json.dumps({"error":"connection error"})
         except Timeout as t:    # This is the correct syntax
-            print "Timeout error: %s" %t
+            #print "Timeout error: %s" %t
             response = "No response"
             return json.dumps({"error":t.message})
         except:
@@ -198,15 +198,15 @@ class OpeniCall(object):
         query= "user=%s&apps=%s&method=%s&data=%s&format=json"%(self.user,str(apps),self.method, str(self.data))
         url = "%s%s/"%(apiURLs.platformAPI,self.objectName)
         full_url = url + '?' + query
-        print full_url
+        #print full_url
         try:
             response = requests.get(full_url)
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
-            print "error: %s" %e
+            #print "error: %s" %e
             return response
         except Timeout as t:    # This is the correct syntax
-            print "Timeout error: %s" %t
+            #print "Timeout error: %s" %t
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
@@ -237,10 +237,10 @@ class OpeniCall(object):
             response = requests.get(full_url)
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
-            print "error: %s" %e
+            #print "error: %s" %e
             return response
         except Timeout as t:    # This is the correct syntax
-            print "Timeout error: %s" %t
+            #print "Timeout error: %s" %t
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
@@ -254,10 +254,10 @@ class OpeniCall(object):
             #print response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
-            print "error: %s" %e
+            #print "error: %s" %e
             return response
         except Timeout as t:    # This is the correct syntax
-            print "Timeout error: %s" %t
+            #print "Timeout error: %s" %t
             return json.dumps({"error":t.message})
         except:
             return json.dumps([])
@@ -267,7 +267,7 @@ class OpeniCall(object):
         full_url= "%s%s/?api_key=special-key&format=json"%(apiURLs.swaggerAPI,self.objectName)
         try:
             response = requests.get(full_url)
-            print response.text
+            #print response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
@@ -312,17 +312,17 @@ class CloudletCall(object):
         token['token']=user_tmp
         token['signature']=self.signature
         full_url='%s%s'%(apiURLs.cloudletAPI,'cloudlets')
-        print full_url
-        print token
+        #print full_url
+        #print token
         headerCall={}
         headerCall["auth_token"]=  token
-        print headerCall
+        #print headerCall
         hdr={"auth_token": { "token": { "user": "dmccarthy" }, "signature": "cVnf/YsH/h+554tlAAh5CvyLr3Y9xrqAK4zxTA/C8PMDWcjcUZistg90H2HiCL/tAL3VZe/53VbJcrFZGyFZDw==" }}
         #print(hdr)
         try:
             response = requests.get(full_url,headers=json.dumps(hdr),verify=False)
-            print response.text
-            print(response.json())
+            #print response.text
+            #print(response.json())
             return response
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
@@ -377,7 +377,7 @@ class FoursquareCall(object):
             return json.dumps([])
     def getPlacesAround(self, lat,lng,radius=3000):
         full_url = "%svenues/search?oauth_token=%s&v=%s&ll=%s,%s&limit=50"%(apiURLs.FoursquareURL, self.access_token,self.version,lat,lng)
-        print(full_url)
+        #print(full_url)
         try:
             response = requests.get(full_url, verify=False)
             #print response
@@ -407,7 +407,7 @@ class ProductDB(object):
     def getProducts(self, limit=3):
         #full_url = "%s?limit=%s&category=%s"%(apiURLs.productsDBurl, limit, self.getRandomCategory())
         full_url = "%s?limit=%s"%(apiURLs.productsDBurl, limit)
-        print(full_url)
+        #print(full_url)
         try:
             response = requests.get(full_url, verify=False)
             #print response
@@ -434,7 +434,7 @@ class OPENiOAuth(object):
         return self.session
     def getSession(self, username, password):
         full_url = "%ssessions"%(apiURLs.demo2APIoAuth)
-        print(full_url)
+        #print(full_url)
         try:
             #data={"username":username,"password":password, "scope":""}
             data='{"username":"%s","password":"%s", "scope":""}'%(username,password)
@@ -442,7 +442,7 @@ class OPENiOAuth(object):
             #print response
             self.status_code=response.status_code
             self.session=response.json()["session"]
-            print self.session
+            #print self.session
         except ConnectionError as e:    # This is the correct syntax
             print "error: %s" %e
             self.access_token=None
@@ -454,7 +454,7 @@ class OPENiOAuth(object):
     def authorize(self, username, password):
         self.getSession(username,password)
         full_url = "%sauthorizations"%(apiURLs.demo2APIoAuth)
-        print(full_url)
+        #print(full_url)
         try:
             data={"session":self.session,"client_id":username}
             response = requests.post(full_url, data, verify=False)

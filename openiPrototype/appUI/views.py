@@ -140,7 +140,7 @@ def getRecPlaces(request):
     #places=[]
     openiCall=queryHandlers.OpeniCall(token=token)
     context=openiCall.getContext()
-    context=context["result"][0]["@data"]["context"]
+    context=context["result"][-1]["@data"]["context"]
     places=recommender.getPlaces(lat,lng)
     #print places
     args = {"lat":lat, "long":lng, "city":city, "datetime":local, "places":places, "user":request.user, "settings":settings, "token":token, "context":context, "userID":userID, "username":username}
@@ -185,7 +185,7 @@ def getRecProducts(request):
         #     break
     openiCall=queryHandlers.OpeniCall(token=token)
     context=openiCall.getContext()
-    context=context["result"][0]["@data"]["context"]
+    context=context["result"][-1]["@data"]["context"]
 
 
     if request.method=='POST':
@@ -222,7 +222,7 @@ def signin(request):
         password = request.POST.get("password", "")
         oAuthCall=queryHandlers.OPENiOAuth()
         oAuthCall.getSession(username,password)
-        print oAuthCall.getSessionToken()
+        #print oAuthCall.getSessionToken()
         #print oAuthCall.getAccessToken()
         if oAuthCall.status_code ==200:
             #request.session["openi-token"]=oAuthCall.getAccessToken()
@@ -375,7 +375,7 @@ def getOrders(request):
         #shopsAround["objects"][i]["place"]={}
         ordersOfUser["objects"][i]["From"]={"object_type":"%s"%(loc[1]) , "id":"%s"%(loc[3]), "name":"%s"%(loc[5])}
         i+=1
-    print ordersOfUser
+    #print ordersOfUser
     args = { "orders":ordersOfUser, "user":request.user}
     args.update(csrf(request))
     return render_to_response("orders.html",args)
@@ -530,7 +530,7 @@ def train(request):
         person = PersonForm(request.POST)
         #ageG=AgeGroupForm(request.POST)
         if person.is_valid():
-            print person
+            #print person
             personInstance = person.save()
             #ageG.save(person=personInstance)
             request.session['user'] = personInstance.id
@@ -559,3 +559,15 @@ def checkProductsResults(products):
         if len(products)==0:
             checkProductsResults(products)
     return products
+
+
+def authOPENi(request):
+    args = { }
+    args.update(csrf(request))
+    return render_to_response("login-with-openi.html", args)
+
+
+def oauthOPENi(request):
+    args = { "url":apiURLs.oauthURL}
+    args.update(csrf(request))
+    return render_to_response("login-iframe.html", args)
