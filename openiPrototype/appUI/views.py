@@ -166,12 +166,14 @@ def getRecProducts(request):
         settings['daytimeSettings']=request.POST.get("daytimeSettings", "")
         settings['categorySettings']=request.POST.get("categorySettings", "")
         settings['methodRecommendation']=request.POST.get("methodRecommendation", "")
+        settings['shopRecommendation']=request.POST.get("shopRecommendation", "")
         token=request.session.get('openi-token')
         userID=request.POST.get("userID", "")
         #print settings
     else:
         settings['categorySettings']='all'
         settings['methodRecommendation']='count'
+        settings['shopRecommendation']='no'
         token=request.session.get('openi-token')
         userID=request.session.get('username')
     timezone=str(tzwhere().tzNameAt(float(lat), float(lng)))
@@ -196,7 +198,7 @@ def getRecProducts(request):
     else:
         recommender=queryHandlers.RecommenderSECall(token, True,True, True,local)
 
-    products=recommender.getProducts(category=settings['categorySettings'], method=settings['methodRecommendation'])
+    products=recommender.getProducts(category=settings['categorySettings'], method=settings['methodRecommendation'], shopId=settings['shopRecommendation'])
 
 
     args = { "datetime":local, "products":products, "user":request.user, "settings":settings, "token":token, "productCategories":apiURLs.recommnederProductCategories, "username":username, "context":context}

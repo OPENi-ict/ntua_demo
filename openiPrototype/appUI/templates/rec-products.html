@@ -16,7 +16,7 @@
                                     <!-- Default box -->
                                     <div class="box">
                                         <div class="box-header">
-                                            <h4 class="box-title">Context Settings</h4>
+                                            <h4 class="box-title">Context Settings for Recommender SE</h4>
                                         </div>
                                         <div class="box-body">
                                             <p>
@@ -191,11 +191,40 @@
                                                 </div>
                                             </div>
                                             </p>
+                                        <hr>
+                                        <p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Choose Shop:</label>
+                                                    </div>
+                                            <div class="col-md-7">
+                                                <div class="btn-group">
+                                                    <button type="button" id="shopButton" class="btn btn-default" data-toggle="dropdown">{{ settings.shopId | default:'No' }}</button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a class="shopLink" href="#">No</a></li>
+                                                        <li><a class="shopLink" href="#">Shop1</a></li>
+                                                        <li><a class="shopLink" href="#">Shop2</a></li>
+
+                                                    </ul>
+                                                    <input id="shopRec" name="shopRecommendation" hidden="hidden" value="{{ settings.shopId | default:'No' }}">
+                                                    <script>
+                                                        $(".shopLink").click(function(){
+                                                            $("#shopRec").val($(this).text());
+                                                            //alert ($(this).text());
+                                                        });
+                                                    </script>
+                                            </div>
+
+                                            </div>
+                                                </div>
+
+                                        </p>
 
                              </div>
                                     <div class="panel-footer">
                                         <div class="box-header">
-                                            <h4 class="box-title">Context from Cloudlet</h4>
+                                            <h4 class="box-title"><i class="fa fa-fw fa-user-secret"></i>Context from Cloudlet directly</h4>
+                                            (no call to SE)
                                         </div>
 
                                                 <b>Age</b>: {{ context.personalization_age_range }}<br>
@@ -221,6 +250,10 @@
 <div class="col-md-8">
     <div class="box-body table-responsive no-padding">
                                     <table class="table table-hover">
+                                        <tr>
+                                            <th>User View</th>
+                                            <th>User View</th>
+                                        </tr>
                                         <tr>
                                             <th>Name</th>
                                             <th>Description</th>

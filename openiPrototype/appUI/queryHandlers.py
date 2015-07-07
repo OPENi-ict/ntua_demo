@@ -73,7 +73,7 @@ class RecommenderSECall(object):
         if str(category).lower()!='all':
             extraString="&category=%s"%category
         ##Add contextual properties
-        full_url="%sproducts/?currency=euro&shop=12&sortParam=%s%s"%(apiURLs.recommenderSE,method,extraString)  ##Add user ID
+        full_url="%sproducts/?currency=euro&sortParam=%s%s"%(apiURLs.recommenderSE,method,extraString)  ##Add user ID
         context=[]
         if self.education:
             context.append("education")
@@ -93,13 +93,30 @@ class RecommenderSECall(object):
                 full_url = full_url[:-1]
         ##END: Add contextual properties
 
+        if shopId=='Shop1' or shopId=='Shop2':
+            if shopId=='Shop1':
+                username = apiURLs.shop1_username
+                password = apiURLs.shop1_pass
+            else:
+                username = apiURLs.shop2_username
+                password = apiURLs.shop2_pass
+            oAuthCall=OPENiOAuth()
+            oAuthCall.getSession(username,password)
+            #print oAuthCall.getSessionToken()
+            #print oAuthCall.getAccessToken()
+            if oAuthCall.status_code ==200:
+                #request.session["openi-token"]=oAuthCall.getAccessToken()
+                full_url='%s&shop=%s'%(full_url,oAuthCall.getSessionToken())
+        else:
+            full_url='%s&shop=%s'%(full_url,'allStores')
+
         if self.timestamp is not None:
             full_url="%s&timestamp=%s"%(full_url,self.timestamp)
 
         try:
             header={"Authorization":self.token}
             response = requests.get(full_url,headers=header)
-            #print "Recommender URL: %s" %full_url
+            print "Recommender URL: %s" %full_url
             #print "got a respone with: %s" %response.text
             return response.json()
         except ConnectionError as e:    # This is the correct syntax
