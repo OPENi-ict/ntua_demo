@@ -13,6 +13,7 @@
                     <div class="col-md-3">
                         <form action="/rec-places" method="post">{% csrf_token %}
                             <div class="col-sm-12">
+                            <img src="../static/img/dev-icon.png" style="height: 50px;width: 50px"/> <label>Developer view</label>
                                     <!-- Default box -->
                                     <div class="box">
                                         <div class="box-header">
@@ -170,9 +171,9 @@
 
                              </div>
                                         <div class="panel-footer">
+                                        <img src="../static/img/cloud-10.png" style="height: 50px;width: 50px"/> <label>Cloudlet view</label>
                                         <div class="box-header">
-                                            <h4 class="box-title">Context from Cloudlet directly</h4>
-                                            (no call to SE)
+                                            <h4 class="box-title">Context from Cloudlet directly</h4>(no call to SE)
                                         </div>
 
                                                 <b>Age</b>: {{ context.personalization_age_range }}<br>
@@ -195,6 +196,9 @@
 {% endblock %}
 
 {% block show_content %}
+
+    <img src="../static/img/connected-user.png" style="height: 50px;width: 50px"/> <label>User view</label>
+
 <div class="col-md-4">
     {% leaflet_map "yourmap" callback="window.map_init_basic" %}
 

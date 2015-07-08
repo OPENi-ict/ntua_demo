@@ -14,7 +14,9 @@
                         <form action="/rec-products" method="post">{% csrf_token %}
                             <div class="col-sm-12">
                                     <!-- Default box -->
+                                    <img src="../static/img/dev-icon.png" style="height: 50px;width: 50px"/> <label>Developer view</label>
                                     <div class="box">
+
                                         <div class="box-header">
                                             <h4 class="box-title">Context Settings for Recommender SE</h4>
                                         </div>
@@ -222,8 +224,9 @@
 
                              </div>
                                     <div class="panel-footer">
+                                    <img src="../static/img/cloud-10.png" style="height: 50px;width: 50px"/> <label>Cloudlet view</label>
                                         <div class="box-header">
-                                            <h4 class="box-title"><i class="fa fa-fw fa-user-secret"></i>Context from Cloudlet directly</h4>
+                                            Context from Cloudlet directly</h4>
                                             (no call to SE)
                                         </div>
 
@@ -247,13 +250,11 @@
 {% endblock %}
 
 {% block show_content %}
-<div class="col-md-8">
+{#<div class="col-md-8" style="background-image: url(../static/img/ipad-hand.png); height: max; width: max;">#}
+    <div class="col-md-8">
     <div class="box-body table-responsive no-padding">
+    <img src="../static/img/connected-user.png" style="height: 50px;width: 50px"/> <label>User view</label>
                                     <table class="table table-hover">
-                                        <tr>
-                                            <th>User View</th>
-                                            <th>User View</th>
-                                        </tr>
                                         <tr>
                                             <th>Name</th>
                                             <th>Description</th>
